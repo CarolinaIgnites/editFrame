@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Game Frame Example</title>
+  <meta name="description" content="TODO" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="//www.carolinaignites.org/assets/js/manifest.json">
+  <link href="//www.carolinaignites.org/assets/css/gameframe.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <div id="container">
+    <svg id="game">
+        </svg>
+    <svg id="templates">
+        </svg>
+  </div>
+
+  <script type="text/javascript">
+  // Stolen from Stackoverflow: https://stackoverflow.com/questions/14924362/
+  var C = {
+    __on: {},
+    addEventListener: function(name, callback) {
+      this.__on[name] = (this.__on[name] || []).concat(callback);
+      return this;
+    },
+    dispatchEvent: function(name, value) {
+      this.__on[name] = (this.__on[name] || []);
+      for (var i = 0, n = this.__on[name].length; i < n; i++) {
+        this.__on[name][i].call(this, value);
+      }
+      return this;
+    },
+    log: function() {
+      var a = [];
+      // For V8 optimization
+      for (var i = 0, n = arguments.length; i < n; i++) {
+        a.push(arguments[i]);
+      }
+      this.dispatchEvent("log", a);
+    },
+    error: function() {
+      var a = [];
+      // For V8 optimization
+      for (var i = 0, n = arguments.length; i < n; i++) {
+        a.push(arguments[i]);
+      }
+      this.dispatchEvent("error", a);
+    }
+  };
+  C.debug = C.info = C.log;
+  var console = C;
+
+  // Handle gracefuly if things break.
+  let raw = window.atob(window.location.search.split('?q=')[1]);
+  let data = JSON.parse(raw);
+  let container = document.querySelector("#container");
+  container.innerHTML = window.atob(data["html"]);
+  </script>
+
+  <!-- Find more reliable sources -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PhysicsJS/0.7.0/physicsjs-full.min.js"></script>
+  <script src="//www.carolinaignites.org/assets/js/interactive-custom.js"></script>
+  <script src="//www.carolinaignites.org/assets/js/gameframe.js"></script>
+
+  <script type="text/javascript">
+  new GameFrame(data["meta"], function(gf) {
+    let collision = gf.collision;
+    let gameOver = gf.gameOver;
+    let score = gf.score;
+    let remove = gf.remove;
+    let registerKeys = gf.registerKeys;
+    let registerLoops = gf.registerLoops;
+    let template = gf.template;
+
+    try {
+      eval(window.atob(data["code"]));
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  });
+  </script>
+
+</body>
+
+</html>

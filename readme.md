@@ -17,7 +17,7 @@ editFrame is an editor for [gameFrame](https://github.com/CarolinaIgnites/gameFr
 **Note:** Editframe is under active development and likely to change.
 
 ### A screenshot of the editor
-[!Here's the editor in action.](image/screen.png)
+![Here's the editor in action.](image/screen.png)
 
 Starting out
 ===

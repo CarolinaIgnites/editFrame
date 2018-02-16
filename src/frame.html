@@ -23,45 +23,51 @@
   </div>
 
   <script type="text/javascript">
-  // Stolen from Stackoverflow: https://stackoverflow.com/questions/14924362/
-  var C = {
-    __on: {},
-    addEventListener: function(name, callback) {
-      this.__on[name] = (this.__on[name] || []).concat(callback);
-      return this;
-    },
-    dispatchEvent: function(name, value) {
-      this.__on[name] = (this.__on[name] || []);
-      for (var i = 0, n = this.__on[name].length; i < n; i++) {
-        this.__on[name][i].call(this, value);
+    // Stolen from Stackoverflow: https://stackoverflow.com/questions/14924362/
+    let C = {
+      __on: {},
+      addEventListener: function(name, callback) {
+        this.__on[name] = (this.__on[name] || []).concat(callback);
+        return this;
+        },
+      dispatchEvent: function(name, value) {
+        this.__on[name] = (this.__on[name] || []);
+        for (var i = 0, n = this.__on[name].length; i < n; i++) {
+            this.__on[name][i].call(this, value);
+        }
+        return this;
+        },
+      log: function() {
+        let a = [];
+        // For V8 optimization
+        for (let i = 0, n = arguments.length; i < n; i++) {
+            a.push(arguments[i]);
+        }
+        this.dispatchEvent("log", a);
+      },
+      error: function() {
+        let a = [];
+        // For V8 optimization
+        for (let i = 0, n = arguments.length; i < n; i++) {
+            a.push(arguments[i]);
+        }
+        this.dispatchEvent("error", a);
       }
-      return this;
-    },
-    log: function() {
-      var a = [];
-      // For V8 optimization
-      for (var i = 0, n = arguments.length; i < n; i++) {
-        a.push(arguments[i]);
-      }
-      this.dispatchEvent("log", a);
-    },
-    error: function() {
-      var a = [];
-      // For V8 optimization
-      for (var i = 0, n = arguments.length; i < n; i++) {
-        a.push(arguments[i]);
-      }
-      this.dispatchEvent("error", a);
-    }
-  };
-  C.debug = C.info = C.log;
-  var console = C;
+    };
+    C.debug = C.info = C.log;
+    var console = C;
 
-  // Handle gracefuly if things break.
-  let raw = window.atob(window.location.search.split('?q=')[1]);
-  let data = JSON.parse(raw);
-  let container = document.querySelector("#container");
-  container.innerHTML = window.atob(data["html"]);
+    // Handle gracefuly if things break.
+    let query = window.location.search.split('?q=');
+    var data = {meta:{debug:true}}; // Init defaults
+    var code = "console.error('Nothing to run!!')";
+    if(query.length > 1) {
+      let raw = window.atob(query[1]);
+      let container = document.querySelector("#container");
+      data = JSON.parse(raw);
+      code = window.atob(data["code"]);
+      container.innerHTML = window.atob(data["html"]);
+    }
   </script>
 
   <!-- Find more reliable sources -->
@@ -80,7 +86,7 @@
     let template = gf.template;
 
     try {
-      eval(window.atob(data["code"]));
+      eval(code);
     } catch (e) {
       console.error(e);
       throw e;

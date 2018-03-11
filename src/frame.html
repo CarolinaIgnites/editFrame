@@ -56,7 +56,6 @@
     };
     C.debug = C.info = C.log;
     var console = C;
-
     // Handle gracefuly if things break.
     let query = window.location.search.split('?q=');
     var data = {meta:{debug:true}}; // Init defaults
@@ -84,7 +83,6 @@
     let registerKeys = gf.registerKeys;
     let registerLoops = gf.registerLoops;
     let template = gf.template;
-
     try {
       eval(code);
     } catch (e) {

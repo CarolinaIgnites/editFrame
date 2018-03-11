@@ -22,11 +22,9 @@
     <script src=http://codemirror.net/lib/codemirror.js></script>
     <script src=http://codemirror.net/mode/javascript/javascript.js></script>
     <script src=http://codemirror.net/mode/htmlmixed/htmlmixed.js></script>
-     <script src=http://codemirror.net/mode/xml/xml.js></script>
+    <script src=http://codemirror.net/mode/xml/xml.js></script>
     <style>
-
-    .CodeMirror
-    {
+    .CodeMirror {
         height: auto;
     }
 
@@ -40,6 +38,7 @@
         width: -webkit-fill-available;
     }
 
+
     .tab-content {}
     </style>
 </head>
@@ -47,7 +46,7 @@
 <body>
     <div class="modal-body">
         <div class="col-md-4">
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs" id="editTabs" role="tablist">
                 <li class="active">
                     <a href="#meta" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Meta</a>
                 </li>
@@ -103,8 +102,7 @@
                     </div>
                 </div>
             </div>
-            <button id="update" type="button" class="btn btn-secondary btn-lg btn-block">Update Game</button>
-
+            <!-- <button id="update" type="button" class="btn btn-secondary btn-lg btn-block">Update Game</button> -->
         </div>
         <!-- TODO: add the sandbox attribute properly -->
         <div class="col-md-8">
@@ -124,21 +122,19 @@
                     <h1>CarolinaIgnites</h1>
                 </div>
             </div>
+            <button id="update" type="button" class="btn btn-secondary btn-lg btn-block">Update Game</button>
         </div>
     </div>
     <script>
     // Run before page load
 
     (() => {
-
         var htmlCode = $("#HTMLtext")[0];
-        var htmlEditor = CodeMirror.fromTextArea(htmlCode, 
-        {
+        var htmlEditor = CodeMirror.fromTextArea(htmlCode, {
             mode: "htmlmixed",
             lineNumbers: true,
             lineWrapping: true,
             theme: "solarized dark",
-            viewportMargin: Infinity
         })
 
         var jsCode = $("#codeText")[0];
@@ -149,10 +145,18 @@
             theme: "solarized dark",
             viewportMargin: Infinity
         });
-
-
-
-
+        /*
+         $( "#editTabs" ).tabs({
+             activate: function(event, ui) {
+            htmlEditor.refresh();
+             jsEditor.refresh();
+          }
+          });     
+        */
+       $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+             htmlEditor.refresh();
+             jsEditor.refresh();
+        })
         let frame = $("#frame");
         let resize = function() {
             frame.height(frame.width() * 768 / 1366);
@@ -168,21 +172,23 @@
                 console.error(value);
             });
         };
+
         let hash = location.hash.split("#");
-                if (hash.length > 1) {
-                    let raw = atob(hash[1]);
-                    let source = JSON.parse(raw);
-                    $("#title").val(source["meta"]["name"]);
-                    $("#instructions").val(source["meta"]["instructions"]);
-                   // $("#HTMLtext").val(atob(source["html"]));
-                    //$("#codeText").val(atob(source["code"]));
-                    htmlEditor.setValue(atob(source["html"]));
-                    jsEditor.setValue(atob(source["code"]));
-                    $("#boundaries")[0].checked = source["meta"]["boundaries"];
-                    $("#gravity")[0].checked = source["meta"]["gravity"];
-                    $("#impulse")[0].checked = source["meta"]["impulse"];
-                    $("#update").click();
-                }
+        if (hash.length > 1) {
+            let raw = atob(hash[1]);
+            let source = JSON.parse(raw);
+            $("#title").val(source["meta"]["name"]);
+            $("#instructions").val(source["meta"]["instructions"]);
+            // $("#HTMLtext").val(atob(source["html"]));
+            //$("#codeText").val(atob(source["code"]));
+            htmlEditor.setValue(atob(source["html"]));
+            jsEditor.setValue(atob(source["code"]));
+            $("#boundaries")[0].checked = source["meta"]["boundaries"];
+            $("#gravity")[0].checked = source["meta"]["gravity"];
+            $("#impulse")[0].checked = source["meta"]["impulse"];
+            $("#update").click();
+        }
+
 
         $("#update").click(() => {
             var data = new Object();
@@ -204,10 +210,11 @@
         });
 
 
-        
+
     })();
     // Run jQuery Plugin
     jQuery(function($, undefined) {
+
         var term = $('#console').terminal(function(command) {
             if (command !== '') {
                 try {

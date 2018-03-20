@@ -98,7 +98,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <button id="update" type="button" class="btn btn-secondary btn-lg btn-block">Update Game</button> -->
         </div>
         <!-- TODO: add the sandbox attribute properly -->
         <div class="col-md-8">
@@ -141,14 +140,7 @@
             theme: "solarized dark",
             viewportMargin: Infinity
         });
-        /*
-         $( "#editTabs" ).tabs({
-             activate: function(event, ui) {
-            htmlEditor.refresh();
-             jsEditor.refresh();
-          }
-          });     
-        */
+        
        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
              htmlEditor.refresh();
              jsEditor.refresh();
@@ -169,23 +161,6 @@
             });
         };
 
-        let hash = location.hash.split("#");
-        if (hash.length > 1) {
-            let raw = atob(hash[1]);
-            let source = JSON.parse(raw);
-            $("#title").val(source["meta"]["name"]);
-            $("#instructions").val(source["meta"]["instructions"]);
-            // $("#HTMLtext").val(atob(source["html"]));
-            //$("#codeText").val(atob(source["code"]));
-            htmlEditor.setValue(atob(source["html"]));
-            jsEditor.setValue(atob(source["code"]));
-            $("#boundaries")[0].checked = source["meta"]["boundaries"];
-            $("#gravity")[0].checked = source["meta"]["gravity"];
-            $("#impulse")[0].checked = source["meta"]["impulse"];
-            $("#update").click();
-        }
-
-
         $("#update").click(() => {
             var data = new Object();
             var meta = new Object();
@@ -196,8 +171,6 @@
             meta.impulse = $("#impulse").prop("checked");
             meta.debug = true;
             data.meta = meta;
-            //data.html = btoa($("#HTMLtext").val());
-            //data.code = btoa($("#codeText").val());
             data.html = btoa(htmlEditor.getValue());
             data.code = btoa(jsEditor.getValue());
             let hash = btoa(JSON.stringify(data));
@@ -205,8 +178,19 @@
             iframe.src = "frame.html?q=" + hash;
         });
 
-
-
+        let hash = location.hash.split("#");
+        if (hash.length > 1) {
+            let raw = atob(hash[1]);
+            let source = JSON.parse(raw);
+            $("#title").val(source["meta"]["name"]);
+            $("#instructions").val(source["meta"]["instructions"]);
+            htmlEditor.setValue(atob(source["html"]));
+            jsEditor.setValue(atob(source["code"]));
+            $("#boundaries")[0].checked = source["meta"]["boundaries"];
+            $("#gravity")[0].checked = source["meta"]["gravity"];
+            $("#impulse")[0].checked = source["meta"]["impulse"];
+            $("#update").click();
+        }
     })();
     // Run jQuery Plugin
     jQuery(function($, undefined) {

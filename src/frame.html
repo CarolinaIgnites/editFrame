@@ -1,100 +1,116 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Game Frame Example</title>
-  <meta name="description" content="TODO" />
-  <meta name="viewport" content="width=device-width" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="manifest" href="//www.carolinaignites.org/assets/js/manifest.json">
-  <link href="//www.carolinaignites.org/assets/css/gameframe.css" rel="stylesheet">
-  <link href="//www.carolinaignites.org/assets/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <head><meta http - equiv = "Content-Type" content =
+               "text/html; charset=UTF-8"><title>
+        Game Frame Example</ title><meta name = "description" content =
+                                        "TODO" /><
+            meta name = "viewport" content = "width=device-width" /><
+            meta name = "apple-mobile-web-app-capable" content =
+                "yes"><meta name = "mobile-web-app-capable" content = "yes"><
+            link rel = "manifest" href =
+                "//www.carolinaignites.org/assets/js/manifest.json"><
+            link href =
+                "//www.carolinaignites.org/assets/css/gameframe.css" rel =
+                    "stylesheet"><
+            link href =
+                "//www.carolinaignites.org/assets/css/bootstrap.min.css" rel =
+                    "stylesheet"><
+            script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/"
+                         "jquery.min.js"></ script></ head>
 
-<body>
+    <body>
 
-  <div id="container">
-    <svg id="game">
-        </svg>
-    <svg id="templates">
-        </svg>
-  </div>
+    <div id = "container"><svg id = "game"></ svg><svg id = "templates"></ svg><
+        / div>
 
-  <script type="text/javascript">
+    <script type = "text/javascript">
     // Stolen from Stackoverflow: https://stackoverflow.com/questions/14924362/
-    let C = {
-      __on: {},
-      addEventListener: function(name, callback) {
-        this.__on[name] = (this.__on[name] || []).concat(callback);
-        return this;
-        },
-      dispatchEvent: function(name, value) {
-        this.__on[name] = (this.__on[name] || []);
-        for (var i = 0, n = this.__on[name].length; i < n; i++) {
-            this.__on[name][i].call(this, value);
-        }
-        return this;
-        },
-      log: function() {
-        let a = [];
-        // For V8 optimization
-        for (let i = 0, n = arguments.length; i < n; i++) {
-            a.push(arguments[i]);
-        }
-        this.dispatchEvent("log", a);
-      },
-      error: function() {
-        let a = [];
-        // For V8 optimization
-        for (let i = 0, n = arguments.length; i < n; i++) {
-            let message = arguments[i].message;
+    let C = {__on : {},
+             addEventListener : function(name, callback){
+                 this.__on[name] = (this.__on[name] || []).concat(callback);
+return this;
+}
+, dispatchEvent : function(name, value) {
+  this.__on[name] = (this.__on[name] || []);
+  for (var i = 0, n = this.__on[name].length; i < n; i++) {
+    this.__on[name][i].call(this, value);
+  }
+  return this;
+}
+, log : function() {
+  let a = [];
+  // For V8 optimization
+  for (let i = 0, n = arguments.length; i < n; i++) {
+    a.push(arguments[i]);
+  }
+  this.dispatchEvent("log", a);
+}
+, error : function() {
+  let a = [];
+  // For V8 optimization
+  for (let i = 0, n = arguments.length; i < n; i++) {
+    let message = arguments[i].message;
             message += arguments[i].stack.replace(/\([^:]*:[^:]*:/g,'(line ');
             a.push(message);
-        }
-        this.dispatchEvent("error", a);
-      }
-    };
-    C.debug = C.info = C.log;
-    var console = C;
-    // Handle gracefuly if things break.
-    let query = window.location.search.split('?q=');
-    var data = {meta:{debug:true}}; // Init defaults
-    var code = "console.error('Nothing to run!!')";
-    if(query.length > 1) {
-      let raw = window.atob(query[1]);
-      let container = document.querySelector("#container");
-      data = JSON.parse(raw);
-      code = window.atob(data["code"]);
-      container.innerHTML = window.atob(data["html"]);
-    }
-  </script>
+  }
+  this.dispatchEvent("error", a);
+}
+}
+;
+C.debug = C.info = C.log;
+var console = C;
+// Handle gracefuly if things break.
+let query = window.location.search.split('?q=');
+let lookup = window.location.search.split('?l=');
+var data = {meta : {debug : true}}; // Init defaults
+var code = "console.error('Nothing to run!!')";
+let parse = function(hash) {
+  let raw = window.atob(hash);
+  let container = document.querySelector("#container");
+  data = JSON.parse(raw);
+  code = window.atob(data["code"]);
+  container.innerHTML = window.atob(data["html"]);
+}
+if (lookup.length > 1) {
+      $.ajax({url:"https://api.carolinaignites.org/" + lookup[1],
+          dataType: 'json',
+          async:false,
+          success: (data)=>{if(data['valid'])parse(data['data']);else parse(query[1])
+}
+}).fail(()=>parse(query[1]))
+}
+else if (query.length > 1) {
+  parse(query[1]);
+}
+</ script>
 
-  <!-- Find more reliable sources -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PhysicsJS/0.7.0/physicsjs-full.min.js"></script>
-  <script src="//www.carolinaignites.org/assets/js/interactive-custom.js"></script>
-  <script src="//www.carolinaignites.org/assets/js/gameframe.js"></script>
+    <!--Find more reliable sources--><
+        script src = "https://cdnjs.cloudflare.com/ajax/libs/PhysicsJS/0.7.0/"
+                     "physicsjs-full.min.js"></ script><
+        script src =
+            "//www.carolinaignites.org/assets/js/interactive-custom.js"><
+        / script><
+        script src = "//www.carolinaignites.org/assets/js/gameframe.js"></
+                                                                         script>
 
-  <script type="text/javascript">
-  new GameFrame(data["meta"], function(gf) {
-    let collision = gf.collision;
-    let gameOver = gf.gameOver;
-    let score = gf.score;
-    let remove = gf.remove;
-    let registerKeys = gf.registerKeys;
-    let registerLoops = gf.registerLoops;
-    let template = gf.template;
-    try {
+    <script type = "text/javascript"> new GameFrame(data["meta"], function(gf) {
+      let collision = gf.collision;
+      let gameOver = gf.gameOver;
+      let score = gf.score;
+      let remove = gf.remove;
+      let registerKeys = gf.registerKeys;
+      let registerLoops = gf.registerLoops;
+      let template = gf.template;
+      try {
         eval(code);
-    } catch (e) {
-      var err = e.constructor(e.message);
-      err.lineNumber = e.lineNumber - err.lineNumber + 3;
-      console.error(err);
-      throw err;
-    }
-  });
-  </script>
+      } catch (e) {
+        var err = e.constructor(e.message);
+        err.lineNumber = e.lineNumber - err.lineNumber + 3;
+        console.error(err);
+        throw err;
+      }
+    });
+</script>
 
 </body>
 

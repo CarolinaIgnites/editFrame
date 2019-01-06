@@ -30,6 +30,13 @@
       height: auto;
     }
 
+
+
+    .CodeMirror-selected
+    {
+      background: blue; !important;
+    }
+
     iframe {
       display: none;
     }
@@ -162,6 +169,9 @@
       }
       window.addEventListener('resize', resize, true);
       resize();
+      $('.CodeMirror-scroll').css({'max-height': frame.height() + 100 +'px'});
+
+
       let iframe = frame[0];
       iframe.onload = () => {
         iframe.contentWindow.console.addEventListener(
@@ -175,6 +185,8 @@
             console.error(value);
           });
       };
+
+
       $("#update")
         .click(() => {
           var data = new Object();

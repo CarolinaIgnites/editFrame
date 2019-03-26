@@ -2,35 +2,34 @@
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Game Frame Editor</title>
-  <meta name="description" content="TODO" />
-  <meta name="viewport" content="width=device-width" />
-  <link rel="manifest" href="//www.carolinaignites.org/assets/js/manifest.json" />
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.11.4/js/jquery.terminal.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.11.4/css/jquery.terminal.min.css"
-    rel="stylesheet" />
-  <link rel=stylesheet href="https://codemirror.net/doc/docs.css" />
-  <link rel=stylesheet href="https://codemirror.net/lib/codemirror.css" />
-  <link rel=stylesheet href="https://codemirror.net/theme/solarized.css" />
-  <script src="https://codemirror.net/lib/codemirror.js"> </script>
-  <script src="https://codemirror.net/mode/javascript/javascript.js">
-  </script>
-  <script src="https://codemirror.net/mode/htmlmixed/htmlmixed.js"> </script>
-  <script src="https://codemirror.net/mode/xml/xml.js"> </script>
-  <style>
-    .CodeMirror {
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Game Frame Editor</title>
+    <meta name="description" content="TODO" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="manifest" href="//www.carolinaignites.org/assets/js/manifest.json" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.11.4/js/jquery.terminal.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.11.4/css/jquery.terminal.min.css" rel="stylesheet" />
+    <link rel=stylesheet href="https://codemirror.net/doc/docs.css" />
+    <link rel=stylesheet href="https://codemirror.net/lib/codemirror.css" />
+    <link rel=stylesheet href="https://codemirror.net/theme/solarized.css" />
+    <script src="https://codemirror.net/lib/codemirror.js"> </script>
+    <script src="https://codemirror.net/mode/javascript/javascript.js">
+    </script>
+    <script src="https://codemirror.net/mode/htmlmixed/htmlmixed.js"> </script>
+    <script src="https://codemirror.net/mode/xml/xml.js"> </script>
+    <style>
+    
+     .CodeMirror {
       height: auto;
     }
 
 
+    .fullscreenbutton {
+      float: right;
+    }
 
     .CodeMirror-selected
     {
@@ -39,6 +38,11 @@
 
     iframe {
       display: none;
+    }
+
+    .iframe-fullscreen {
+      width: 100%;
+      height: 100%;
     }
 
     .active iframe {
@@ -52,220 +56,242 @@
 </head>
 
 <body>
-  <div class="modal-body">
-    <div class="col-md-4">
-      <ul class="nav nav-tabs" id="editTabs" role="tablist">
-        <li class="active">
-          <a href="#meta" data-toggle="tab" role="tab" aria-controls="home"
-            aria-selected="true">Meta</a>
-        </li>
-        <li>
-          <a href="#html" data-toggle="tab" role="tab" aria-controls="profile"
-            aria-selected="false">HTML</a>
-        </li>
-        <li>
-          <a href="#javascript" data-toggle="tab" role="tab" aria-controls="profile"
-            aria-selected="false">Javascript</a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane active" id="meta">
-          <form>
-            <div class="form-group">
-              <label for="title">Game Title</label>
-              <input type="text" class="form-control" id="title" placeholder="Your game title here." />
+    <div class="modal-body">
+        <div class="col-md-4">
+            <ul class="nav nav-tabs" id="editTabs" role="tablist">
+                <li class="active">
+                    <a href="#meta" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Meta</a>
+                </li>
+                <li>
+                    <a href="#html" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">HTML</a>
+                </li>
+                <li>
+                    <a href="#javascript" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">Javascript</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="meta">
+                    <form>
+                        <div class="form-group">
+                            <label for="title">Game Title</label>
+                            <input type="text" class="form-control" id="title" placeholder="Your game title here." />
+                        </div>
+                        <div class="form-group">
+                            <label for="instructions">Instructions</label>
+                            <textarea class="form-control" id="instructions" rows="3"></textarea>
+                        </div>
+                        <label>Options:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="boundaries" />
+                            <label class="form-check-label" for="boundaries">
+                                Boundaries
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="impulse" />
+                            <label class="form-check-label" for="impulse">
+                                Impulse
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="gravity" />
+                            <label class="form-check-label" for="gravity">
+                                Gravity
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="html">
+                    <div class="form-group">
+                        <label for="HTMLtext">HTML Code</label>
+                        <textarea class="form-control" id="HTMLtext" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="tab-pane" id="javascript">
+                    <div class="form-group">
+                        <label for="codeText">Javascript Code</label>
+                        <textarea class="form-control" id="codeText" rows="3"></textarea>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-              <label for="instructions">Instructions</label>
-              <textarea class="form-control" id="instructions" rows="3"></textarea>
-            </div>
-            <label>Options:</label>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="boundaries" />
-              <label class="form-check-label" for="boundaries">
-                Boundaries
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="impulse" />
-              <label class="form-check-label" for="impulse">
-                Impulse
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="gravity" />
-              <label class="form-check-label" for="gravity">
-                Gravity
-              </label>
-            </div>
-          </form>
         </div>
-        <div class="tab-pane" id="html">
-          <div class="form-group">
-            <label for="HTMLtext">HTML Code</label>
-            <textarea class="form-control" id="HTMLtext" rows="3"></textarea>
-          </div>
+        <div class="col-md-8">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a href="#game" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Game</a>
+                </li>
+                <li>
+                    <a href="#console" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">Console</a>
+                </li>
+                <button id="fullscreen" type="button" class="btn btn-default fullscreenbutton"> Full Screen </button>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane show active" id="game">
+                    <!-- TODO: add the sandbox attribute properly -->
+                    <iframe id="frame" src="frame.html" allowfullscreen></iframe>
+                </div>
+                <div class="tab-pane" id="console">
+                    <h1>CarolinaIgnites</h1>
+                </div>
+            </div>
+            <button id="update" type="button" class="btn btn-secondary btn-lg btn-block">
+                Update Game
+            </button>
         </div>
-        <div class="tab-pane" id="javascript">
-          <div class="form-group">
-            <label for="codeText">Javascript Code</label>
-            <textarea class="form-control" id="codeText" rows="3"></textarea>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="col-md-8">
-      <ul class="nav nav-tabs" role="tablist">
-        <li class="active">
-          <a href="#game" data-toggle="tab" role="tab" aria-controls="home"
-            aria-selected="true">Game</a>
-        </li>
-        <li>
-          <a href="#console" data-toggle="tab" role="tab" aria-controls="profile"
-            aria-selected="false">Console</a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane show active" id="game">
-          <!-- TODO: add the sandbox attribute properly -->
-          <iframe id="frame" src="frame.html"></iframe>
-        </div>
-        <div class="tab-pane" id="console">
-          <h1>CarolinaIgnites</h1>
-        </div>
-      </div>
-      <button id="update" type="button" class="btn btn-secondary btn-lg btn-block">
-          Update Game
-      </button>
-    </div>
-  </div>
-
-  <script>
+    <script>
     // Run before page load
     (() => {
-      var htmlCode = $("#HTMLtext")[0];
-      var htmlEditor = CodeMirror.fromTextArea(htmlCode, {
-        mode: "htmlmixed",
-        lineNumbers: true,
-        lineWrapping: true,
-        theme: "solarized dark",
-      })
-      var jsCode = $("#codeText")[0];
-      var jsEditor = CodeMirror.fromTextArea(jsCode, {
-        mode: "javascript",
-        lineNumbers: true,
-        lineWrapping: true,
-        theme: "solarized dark",
-        viewportMargin: Infinity
-      });
-      $('a[data-toggle="tab"]')
-        .on('shown.bs.tab', function(e) {
-          htmlEditor.refresh();
-          jsEditor.refresh();
-      });
-      let frame = $("#frame");
-      let resize = function() {
-        frame.height(frame.width() * 768 / 1366);
-      }
-      window.addEventListener('resize', resize, true);
-      resize();
-      $('.CodeMirror-scroll').css({'max-height': frame.height() + 100 +'px'});
-
-
-      let iframe = frame[0];
-      iframe.onload = () => {
-        iframe.contentWindow.console.addEventListener(
-          "log",
-          function(value) {
-            console.log(value);
-          });
-        iframe.contentWindow.console.addEventListener(
-          "error",
-          function(value) {
-            console.error(value);
-          });
-      };
-
-
-      $("#update")
-        .click(() => {
-          var data = new Object();
-          var meta = new Object();
-          meta.name = new Option($("#title").val()).innerHTML;
-          meta.instructions = new Option($("#instructions").val()).innerHTML;
-          meta.boundaries = $("#boundaries").prop("checked");
-          meta.gravity = $("#gravity").prop("checked");
-          meta.impulse = $("#impulse").prop("checked");
-          meta.debug = true;
-          data.meta = meta;
-          data.html = btoa(htmlEditor.getValue());
-          data.code = btoa(jsEditor.getValue());
-          let hash = btoa(JSON.stringify(data));
-          $.post("https://api.carolinaignites.org", {
-            data: hash
-          }, (lookup) => {
-            location.hash = lookup['lookup'];
-            iframe.src = "frame.html?l=" + lookup['lookup'];
-          }).fail(function() {
-            location.hash = hash;
-            iframe.src = "frame.html?q=" + hash;
-          });
+        var htmlCode = $("#HTMLtext")[0];
+        var htmlEditor = CodeMirror.fromTextArea(htmlCode, {
+            mode: "htmlmixed",
+            lineNumbers: true,
+            lineWrapping: true,
+            theme: "solarized dark",
+        })
+        var jsCode = $("#codeText")[0];
+        var jsEditor = CodeMirror.fromTextArea(jsCode, {
+            mode: "javascript",
+            lineNumbers: true,
+            lineWrapping: true,
+            theme: "solarized dark",
+            viewportMargin: Infinity
         });
-      let hash = location.hash.split("#");
-      let parse = function(data) {
-        let raw = atob(data);
-        let source = JSON.parse(raw);
-        $("#title").val(source["meta"]["name"]);
-        $("#instructions").val(source["meta"]["instructions"]);
-        htmlEditor.setValue(atob(source["html"]));
-        jsEditor.setValue(atob(source["code"]));
-        $("#boundaries")[0].checked = source["meta"]["boundaries"];
-        $("#gravity")[0].checked = source["meta"]["gravity"];
-        $("#impulse")[0].checked = source["meta"]["impulse"];
-        $("#update").click();
-      }
-      if (hash.length > 1) {
-        $.ajax({
-          url: "https://api.carolinaignites.org/" + hash[1],
-          dataType: 'json',
-          async: false,
-          success: (data) => {
-            if (data['valid']) parse(data['data']);
-            else parse(hash[1])
-          }
-        }).fail(() => parse(hash[1]))
-      }
+        $('a[data-toggle="tab"]')
+            .on('shown.bs.tab', function(e) {
+                htmlEditor.refresh();
+                jsEditor.refresh();
+            });
+        let frame = $("#frame");
+        let resize = function() {
+            frame.height(frame.width() * 768 / 1366);
+        }
+        window.addEventListener('resize', resize, true);
+        resize();
+        $('.CodeMirror-scroll').css({ 'max-height': frame.height() + 100 + 'px' });
+
+
+        let iframe = frame[0];
+        iframe.onload = () => {
+            iframe.contentWindow.console.addEventListener(
+                "log",
+                function(value) {
+                    console.log(value);
+                });
+            iframe.contentWindow.console.addEventListener(
+                "error",
+                function(value) {
+                    console.error(value);
+                });
+        };
+
+        $("#fullscreen")
+            .click(function() {
+                if (document.fullscreenEnabled ||
+                    document.webkitFullscreenEnabled ||
+                    document.mozFullScreenEnabled ||
+                    document.msFullscreenEnabled) {
+
+                    // which element will be fullscreen
+                    var iframe = $("#frame")[0];
+                    // Do fullscreen
+                    //alert("yeet1")
+                    if (iframe.requestFullscreen) {
+                        iframe.requestFullscreen();
+                    } else if (iframe.webkitRequestFullscreen) {
+                        iframe.webkitRequestFullscreen();
+                    } else if (iframe.mozRequestFullScreen) {
+                        iframe.mozRequestFullScreen();
+                    } else if (iframe.msRequestFullscreen) {
+                        iframe.msRequestFullscreen();
+                    }
+                } else {
+                    alert("fullscreen not supported on your browser")
+                }
+            })
+
+        $("#update")
+            .click(() => {
+                var data = new Object();
+                var meta = new Object();
+                meta.name = new Option($("#title").val()).innerHTML;
+                meta.instructions = new Option($("#instructions").val()).innerHTML;
+                meta.boundaries = $("#boundaries").prop("checked");
+                meta.gravity = $("#gravity").prop("checked");
+                meta.impulse = $("#impulse").prop("checked");
+                meta.debug = true;
+                data.meta = meta;
+                data.html = btoa(htmlEditor.getValue());
+                data.code = btoa(jsEditor.getValue());
+                let hash = btoa(JSON.stringify(data));
+                $.post("https://api.carolinaignites.org", {
+                    data: hash
+                }, (lookup) => {
+                    location.hash = lookup['lookup'];
+                    iframe.src = "frame.html?l=" + lookup['lookup'];
+                }).fail(function() {
+                    location.hash = hash;
+                    iframe.src = "frame.html?q=" + hash;
+                });
+            });
+
+        let hash = location.hash.split("#");
+
+        let parse = function(data) {
+            let raw = atob(data);
+            let source = JSON.parse(raw);
+            $("#title").val(source["meta"]["name"]);
+            $("#instructions").val(source["meta"]["instructions"]);
+            htmlEditor.setValue(atob(source["html"]));
+            jsEditor.setValue(atob(source["code"]));
+            $("#boundaries")[0].checked = source["meta"]["boundaries"];
+            $("#gravity")[0].checked = source["meta"]["gravity"];
+            $("#impulse")[0].checked = source["meta"]["impulse"];
+            $("#update").click();
+        }
+        if (hash.length > 1) {
+            $.ajax({
+                url: "https://api.carolinaignites.org/" + hash[1],
+                dataType: 'json',
+                async: false,
+                success: (data) => {
+                    if (data['valid']) parse(data['data']);
+                    else parse(hash[1])
+                }
+            }).fail(() => parse(hash[1]))
+        }
     })();
     // Run jQuery Plugin
     jQuery(function($, undefined) {
-      var term = $('#console')
-        .terminal(
-          function(command) {
-            if (command !== '') {
-              try {
-                var result = window.eval(command);
-                if (result !== undefined) {
-                  this.echo(new String(result));
-                }
-              } catch (e) {
-                this.error(new String(e));
-              }
-            } else {
-              this.echo('');
-            }
-          }, {
-            greetings: 'Welcome to the terminal!',
-            name: 'js_demo',
-            height: 200,
-            prompt: '> '
-          });
-      console.log = (v) => {
-        term.echo(JSON.stringify(v));
-      };
-      console.error = (v) => {
-        term.error(JSON.stringify(v));
-      };
+        var term = $('#console')
+            .terminal(
+                function(command) {
+                    if (command !== '') {
+                        try {
+                            var result = window.eval(command);
+                            if (result !== undefined) {
+                                this.echo(new String(result));
+                            }
+                        } catch (e) {
+                            this.error(new String(e));
+                        }
+                    } else {
+                        this.echo('');
+                    }
+                }, {
+                    greetings: 'Welcome to the terminal!',
+                    name: 'js_demo',
+                    height: 200,
+                    prompt: '> '
+                });
+        console.log = (v) => {
+            term.echo(JSON.stringify(v));
+        };
+        console.error = (v) => {
+            term.error(JSON.stringify(v));
+        };
     });
-  </script>
+    </script>
 </body>
+
 </html>

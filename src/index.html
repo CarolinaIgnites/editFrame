@@ -159,6 +159,14 @@
         });
         $('a[data-toggle="tab"]')
             .on('shown.bs.tab', function(e) {
+                if (($(e.target).attr("href")) == "#console")
+                {
+                    document.getElementById("fullscreen").disabled = true;
+                }
+                else if(($(e.target).attr("href")) == "#game")
+                {
+                    document.getElementById("fullscreen").disabled = false;
+                }
                 htmlEditor.refresh();
                 jsEditor.refresh();
             });

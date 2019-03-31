@@ -17,12 +17,9 @@
     });
     $('a[data-toggle="tab"]')
         .on('shown.bs.tab', function(e) {
-            if (($(e.target).attr("href")) == "#console")
-            {
+            if (($(e.target).attr("href")) == "#console") {
                 document.getElementById("fullscreen").disabled = true;
-            }
-            else if(($(e.target).attr("href")) == "#game")
-            {
+            } else if (($(e.target).attr("href")) == "#game") {
                 document.getElementById("fullscreen").disabled = false;
             }
             htmlEditor.refresh();
@@ -114,6 +111,33 @@
             });
         });
 
+    let updateImageTable = function(image) {
+        document.getElementById("savedImages").children[0].innerHTML +=
+            "<div class='list-group-item col-sm-6'> <img src=" + image["url"] + " width=125 height=125 /> <h5>" + image["name"] + "</h5> </div>";
+    }
+
+    $('.list-group').css({ 'max-height': frame.height() - 100 + 'px' });
+
+    var images = [];
+
+    $("#add").click(() => {
+        var name = $("#imageName").val();
+        var url = $("#imageAddress").val();
+        
+        if (name == "" || url == "")
+        {
+            return
+        }
+        var image = { "name": name, "url": url };
+        images.push(image);
+
+        $("#imageName").val("");
+        $("#imageAddress").val("");
+
+        updateImageTable(image);
+    });
+
+
     let hash = location.hash.split("#");
 
     let parse = function(data) {
@@ -140,6 +164,7 @@
         }).fail(() => parse(hash[1]))
     }
 })();
+
 // Run jQuery Plugin
 jQuery(function($, undefined) {
     var term = $('#console')

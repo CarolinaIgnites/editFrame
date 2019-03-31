@@ -1,0 +1,29 @@
+
+.CodeMirror {
+  height: auto;
+}
+
+.fullscreenbutton {
+  float: right;
+}
+
+.CodeMirror-selected
+{
+  background: blue; !important;
+}
+
+iframe {
+  display: none;
+}
+
+.iframe-fullscreen {
+  width: 100%;
+  height: 100%;
+}
+
+.active iframe {
+  display: block;
+  width: -webkit-fill-available;
+}
+
+.tab-content {}

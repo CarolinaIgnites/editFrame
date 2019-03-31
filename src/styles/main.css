@@ -1,4 +1,3 @@
-
 .CodeMirror {
   height: auto;
 }
@@ -27,3 +26,7 @@ iframe {
 }
 
 .tab-content {}
+
+.cleancode {
+  margin: 5px;
+}

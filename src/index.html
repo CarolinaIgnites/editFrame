@@ -18,10 +18,10 @@
     <script src="https://codemirror.net/lib/codemirror.js"> </script>
     <script src="https://codemirror.net/mode/javascript/javascript.js">
     </script>
-    <script src="util/formatting.js"> </script>
+    <script src="/scripts/formatting.js"> </script>
     <script src="https://codemirror.net/mode/htmlmixed/htmlmixed.js"> </script>
     <script src="https://codemirror.net/mode/xml/xml.js"> </script>
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
 </head>
 
 <body>
@@ -74,14 +74,14 @@
                     <div class="form-group">
                         <label for="HTMLtext">HTML Code</label>
                         <textarea class="form-control" id="HTMLtext" rows="3"></textarea>
-                        <button id="cleancodeHTML" type="button" class="btn btn-default"> Clean Code </button>
+                        <button id="cleancodeHTML" type="button" class="btn btn-default cleancode"> Clean Code </button>
                     </div>
                 </div>
                 <div class="tab-pane" id="javascript">
                     <div class="form-group">
                         <label for="codeText">Javascript Code</label>
                         <textarea class="form-control" id="codeText" rows="3"></textarea>
-                        <button id="cleancodeJS" type="button" class="btn btn-default"> Clean Code </button>
+                        <button id="cleancodeJS" type="button" class="btn btn-default cleancode"> Clean Code </button>
                     </div>
                 </div>
             </div>
@@ -111,6 +111,6 @@
         </div>
     </div>
 </body>
-<script src="editFrame.js"> </script>
+<script src="/scripts/editFrame.js"> </script>
 
 </html>

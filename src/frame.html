@@ -62,6 +62,16 @@
     var data = {
       meta: {
         debug: true
+        external_cache: function(key, value) {
+          // Post value to this addr.
+          // "https://api.carolinaignites.org/cache/" + key + "/";
+          // Should LRU save the value to the key
+        },
+        cache_proxy: function(src, key) {
+          // Obviously make this endpoint.
+          // Should check cache, and if cache fails, it should then stream.
+          return "https://api.carolinaignites.org/proxy/" + key + "/" + src;
+        },
       }
     }; // Init defaults
     var code = "console.error('Nothing to run!!')";

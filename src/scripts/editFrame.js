@@ -53,7 +53,7 @@
         $("#boundaries")[0].checked = source["meta"]["boundaries"];
         $("#gravity")[0].checked = source["meta"]["gravity"];
         $("#impulse")[0].checked = source["meta"]["impulse"];
-        constructImages(JSON.parse(atob(source["images"] || "")));
+        constructImages(JSON.parse(atob(source["images"] || btoa("{}"))));
         $("#update").click();
     }
     let frame = $("#frame");

@@ -31,7 +31,7 @@
           // Post value to this addr.
           // "https://api.carolinaignites.org/cache/" + key + "/";
           // Should LRU save the value to the key
-          debugger
+          // Interact with Service worker cache potentially.
         },
         cache_proxy: function(src, key) {
           // Obviously make this endpoint.
@@ -40,7 +40,9 @@
           if (lookup in image_lookup) {
             src = image_lookup[lookup];
           }
-          return "https://api.carolinaignites.org/cors/" + src;
+          // Uncomment this line when coors works
+          // return "https://api.carolinaignites.org/cors/" + src;
+          return src
         },
     };
     (()=>{

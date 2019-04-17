@@ -15,6 +15,58 @@
         theme: "solarized dark",
         viewportMargin: Infinity
     });
+    let images = {};
+    let updateImageTable = function(image) {
+      // TODO set url correctly.
+      let img = new DOMParser().parseFromString(`
+      <div class='list-group-item col-sm-6'>
+        <img src=` + image["url"] + ` width=125 height=125 />
+        <h5>` + image["name"] + `</h5>
+      </div>`, "text/html");
+
+      image["dom"] = img.body.firstChild;
+      document.getElementById("imageHolder").appendChild(image["dom"])
+    }
+    let hashImages = function(){
+      let bare_images = {};
+      for (image in images) {
+        bare_images[image] = images[image]["url"];
+      }
+      return bare_images;
+    }
+    let constructImages = function(imgs){
+      console.log(imgs)
+      for (name in imgs) {
+        images[name] = {"name": name, "url": imgs[name], "dom": null};
+        updateImageTable(images[name]);
+      }
+    }
+    let hash = location.hash.split("#");
+    let parse = function(data) {
+        let raw = atob(data);
+        let source = JSON.parse(raw);
+        console.log(source)
+        $("#title").val(source["meta"]["name"]);
+        $("#instructions").val(source["meta"]["instructions"]);
+        htmlEditor.setValue(atob(source["html"]));
+        jsEditor.setValue(atob(source["code"]));
+        $("#boundaries")[0].checked = source["meta"]["boundaries"];
+        $("#gravity")[0].checked = source["meta"]["gravity"];
+        $("#impulse")[0].checked = source["meta"]["impulse"];
+        constructImages(JSON.parse(atob(source["images"] || "")));
+        $("#update").click();
+    }
+    let frame = $("#frame");
+    let iframe = frame[0];
+    let resize = function() {
+        frame.height(frame.width() * 768 / 1366);
+    }
+    window.addEventListener('resize', resize, true);
+    resize();
+
+    // Register events
+    $('.list-group').css({ 'max-height': frame.height() - 100 + 'px' });
+
     $('a[data-toggle="tab"]')
         .on('shown.bs.tab', function(e) {
             if (($(e.target).attr("href")) == "#console") {
@@ -25,16 +77,8 @@
             htmlEditor.refresh();
             jsEditor.refresh();
         });
-    let frame = $("#frame");
-    let resize = function() {
-        frame.height(frame.width() * 768 / 1366);
-    }
-    window.addEventListener('resize', resize, true);
-    resize();
     $('.CodeMirror-scroll').css({ 'max-height': frame.height() + 80 + 'px' });
 
-
-    let iframe = frame[0];
     iframe.onload = () => {
         iframe.contentWindow.console.addEventListener(
             "log",
@@ -99,6 +143,7 @@
             data.meta = meta;
             data.html = btoa(htmlEditor.getValue());
             data.code = btoa(jsEditor.getValue());
+            data.images = btoa(JSON.stringify(hashImages()));
             let hash = btoa(JSON.stringify(data));
             $.post("https://api.carolinaignites.org", {
                 data: hash
@@ -111,52 +156,31 @@
             });
         });
 
-    let updateImageTable = function(image) {
-        document.getElementById("savedImages").children[0].innerHTML +=
-            "<div class='list-group-item col-sm-6'> <img src=" + image["url"] + " width=125 height=125 /> <h5>" + image["name"] + "</h5> </div>";
-    }
-
-    $('.list-group').css({ 'max-height': frame.height() - 100 + 'px' });
-
-    var images = [];
-
     $("#add").click(() => {
         var name = $("#imageName").val();
         var url = $("#imageAddress").val();
-        
-        if (name == "" || url == "")
-        {
-            return
+
+        if (name == "" || url == "") return
+
+        if (name in images) {
+          let dom = images[name]["dom"];
+          dom.querySelector("img").src = url;
+          return;
         }
-        var image = { "name": name, "url": url };
-        images.push(image);
+
+        images[name] = {"name": name, "url": url, "dom":null};
 
         $("#imageName").val("");
         $("#imageAddress").val("");
 
-        updateImageTable(image);
+        updateImageTable(images[name]);
     });
 
-
-    let hash = location.hash.split("#");
-
-    let parse = function(data) {
-        let raw = atob(data);
-        let source = JSON.parse(raw);
-        $("#title").val(source["meta"]["name"]);
-        $("#instructions").val(source["meta"]["instructions"]);
-        htmlEditor.setValue(atob(source["html"]));
-        jsEditor.setValue(atob(source["code"]));
-        $("#boundaries")[0].checked = source["meta"]["boundaries"];
-        $("#gravity")[0].checked = source["meta"]["gravity"];
-        $("#impulse")[0].checked = source["meta"]["impulse"];
-        $("#update").click();
-    }
+    // Load in data
     if (hash.length > 1) {
         $.ajax({
             url: "https://api.carolinaignites.org/" + hash[1],
             dataType: 'json',
-            async: false,
             success: (data) => {
                 if (data['valid']) parse(data['data']);
                 else parse(hash[1])

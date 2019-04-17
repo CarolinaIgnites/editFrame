@@ -6,7 +6,7 @@
     <title>Game Frame Editor</title>
     <meta name="description" content="TODO" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="manifest" href="//www.carolinaignites.org/assets/js/manifest.json" />
+    <link rel="manifest" href="/manifest.json" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -18,10 +18,10 @@
     <script src="https://codemirror.net/lib/codemirror.js"> </script>
     <script src="https://codemirror.net/mode/javascript/javascript.js">
     </script>
-    <script src="util/formatting.js"> </script>
+    <script src="/scripts/formatting.js"> </script>
     <script src="https://codemirror.net/mode/htmlmixed/htmlmixed.js"> </script>
     <script src="https://codemirror.net/mode/xml/xml.js"> </script>
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
 </head>
 
 <body>
@@ -31,14 +31,14 @@
                 <li class="active">
                     <a href="#meta" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Meta</a>
                 </li>
-                <li class="#images">
-                    <a href="#images" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">Images</a>
-                </li>
                 <li>
                     <a href="#html" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">HTML</a>
                 </li>
                 <li>
                     <a href="#javascript" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">Javascript</a>
+                </li>
+                <li class="#images">
+                    <a href="#images" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">Images</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -94,7 +94,7 @@
                     </div>
                     <h2> Saved Images </h2>
                     <div id="savedImages" class="savedImages">
-                        <div class="list-group">
+                        <div id="imageHolder" class="list-group">
                         </div>
                     </div>
                 </div>
@@ -102,14 +102,14 @@
                     <div class="form-group">
                         <label for="HTMLtext">HTML Code</label>
                         <textarea class="form-control" id="HTMLtext" rows="3"></textarea>
-                        <button id="cleancodeHTML" type="button" class="btn btn-default"> Clean Code </button>
+                        <button id="cleancodeHTML" type="button" class="btn btn-default cleancode"> Clean Code </button>
                     </div>
                 </div>
                 <div class="tab-pane" id="javascript">
                     <div class="form-group">
                         <label for="codeText">Javascript Code</label>
                         <textarea class="form-control" id="codeText" rows="3"></textarea>
-                        <button id="cleancodeJS" type="button" class="btn btn-default"> Clean Code </button>
+                        <button id="cleancodeJS" type="button" class="btn btn-default cleancode"> Clean Code </button>
                     </div>
                 </div>
             </div>
@@ -139,6 +139,6 @@
         </div>
     </div>
 </body>
-<script src="editFrame.js"> </script>
+<script src="/scripts/editFrame.js"> </script>
 
 </html>

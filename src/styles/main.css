@@ -31,9 +31,12 @@ iframe {
     margin-bottom: 10px;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
-
 }
 
 .addImageButton {
-	float: right;
+  float: right;
+}
+
+.cleancode {
+  margin: 5px;
 }

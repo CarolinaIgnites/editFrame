@@ -40,9 +40,9 @@
           if (lookup in image_lookup) {
             src = image_lookup[lookup];
           }
-          // Uncomment this line when coors works
-          // return "https://api.carolinaignites.org/cors/" + src;
-          return src
+          return "https://api.carolinaignites.org/cors/" + src;
+          // Uncomment this line if coors doesn't work.
+          // return src
         },
     };
     (()=>{
@@ -116,7 +116,7 @@
   </script>
   <script src="//www.carolinaignites.org/assets/js/interactive-custom.js">
   </script>
-  <script src="/gameframe.js">
+  <script src="//www.carolinaignites.org/assets/js/gameframe.js">
   </script>
   <script type="text/javascript">
     new GameFrame(meta,

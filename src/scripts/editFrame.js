@@ -17,10 +17,10 @@
     });
     let images = {};
     let updateImageTable = function(image) {
-      // TODO set url correctly.
+      let url = "https://api.carolinaignites.org/cors/" + image["url"];
       let img = new DOMParser().parseFromString(`
       <div class='list-group-item col-sm-6'>
-        <img src=` + image["url"] + ` width=125 height=125 />
+        <img src=` + url + ` width=125 height=125 />
         <h5>` + image["name"] + `</h5>
       </div>`, "text/html");
 
@@ -35,7 +35,6 @@
       return bare_images;
     }
     let constructImages = function(imgs){
-      console.log(imgs)
       for (name in imgs) {
         images[name] = {"name": name, "url": imgs[name], "dom": null};
         updateImageTable(images[name]);
@@ -45,7 +44,6 @@
     let parse = function(data) {
         let raw = atob(data);
         let source = JSON.parse(raw);
-        console.log(source)
         $("#title").val(source["meta"]["name"]);
         $("#instructions").val(source["meta"]["instructions"]);
         htmlEditor.setValue(atob(source["html"]));
@@ -80,6 +78,7 @@
     $('.CodeMirror-scroll').css({ 'max-height': frame.height() + 80 + 'px' });
 
     iframe.onload = () => {
+        if (!iframe.contentWindow.console.addEventListener) return;
         iframe.contentWindow.console.addEventListener(
             "log",
             function(value) {
@@ -164,7 +163,8 @@
 
         if (name in images) {
           let dom = images[name]["dom"];
-          dom.querySelector("img").src = url;
+          dom.querySelector("img").src = "https://api.carolinaignites.org/cors/" + url;
+          images[name]["url"] = url;
           return;
         }
 

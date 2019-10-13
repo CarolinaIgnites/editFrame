@@ -77,18 +77,29 @@
         });
     $('.CodeMirror-scroll').css({ 'max-height': frame.height() + 80 + 'px' });
 
+    let motivation = [
+        "Errors can be scary but they don't have to be :)",
+        "Knowing something's wrong the first step to fixing it.",
+        "You got this!",
+        "I'm sure you meant to do this ;).",
+    ];
+
     iframe.onload = () => {
-        if (!iframe.contentWindow.console.addEventListener) return;
+        if (!iframe.contentWindow.console.addEventListener) {
+            console.log("Yor browser will not support logging.");
+            return;
+        }
         iframe.contentWindow.console.addEventListener(
             "log",
             function(value) {
                 console.log(value);
             });
-        iframe.contentWindow.console.addEventListener(
+        iframe.contentWindow.addEventListener(
             "error",
-            function(value) {
-                console.error(value);
-            });
+            function(error) {
+                let msg = motivation[Math.random() * motivation.length | 0];
+                console.error(error.message + "\n    on line: "+ error.error.lineNumber + "\n" + msg);
+            }, false);
     };
 
     $("#cleancodeHTML")
@@ -213,9 +224,9 @@ jQuery(function($, undefined) {
                 prompt: '> '
             });
     console.log = (v) => {
-        term.echo(JSON.stringify(v));
+        term.echo("Log: " + v);
     };
     console.error = (v) => {
-        term.error(JSON.stringify(v));
+        term.error(v);
     };
 });

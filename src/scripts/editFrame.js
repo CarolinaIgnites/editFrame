@@ -140,6 +140,14 @@
             }
         })
 
+    let qrcode = new QRCode("qrcode");
+    $("#QR")
+        .click(function() {
+            let code = location.hash.split("#")[1];
+            let api_url = "https://api.carolinaignites.org/app/" + code;
+            qrcode.makeCode(api_url);
+        });
+
     $("#update")
         .click(() => {
             var data = new Object();

@@ -2,7 +2,7 @@
     height: auto;
 }
 
-.fullscreenbutton {
+#QR, .fullscreenbutton {
     float: right;
 }
 
@@ -39,4 +39,8 @@ iframe {
 
 .cleancode {
   margin: 5px;
+}
+
+#qrcode img {
+    margin: 0 auto;
 }

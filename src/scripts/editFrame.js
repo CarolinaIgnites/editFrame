@@ -17,15 +17,22 @@
     });
     let images = {};
     let updateImageTable = function(image) {
+      debugger;
       let url = "https://api.carolinaignites.org/cors/" + image["url"];
-      let img = new DOMParser().parseFromString(`
-      <div class='list-group-item col-sm-6'>
+      debugger;
+      let imgListItem = new DOMParser().parseFromString(`
+      <div id="` + image["name"] + "div" + `" class='list-group-item col-sm-6'>
         <img src=` + url + ` width=125 height=125 />
+        <button type="button" id="`+image["name"] + `" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
         <h5>` + image["name"] + `</h5>
       </div>`, "text/html");
 
-      image["dom"] = img.body.firstChild;
-      document.getElementById("imageHolder").appendChild(image["dom"])
+      image["dom"] = imgListItem.body.firstChild;
+      debugger;
+      document.getElementById("imageHolder").appendChild(image["dom"]);
+      debugger;
     }
     let hashImages = function(){
       let bare_images = {};
@@ -179,21 +186,34 @@
         var url = $("#imageAddress").val();
 
         if (name == "" || url == "") return
-
+        debugger;
         if (name in images) {
+          debugger;
           let dom = images[name]["dom"];
           dom.querySelector("img").src = "https://api.carolinaignites.org/cors/" + url;
           images[name]["url"] = url;
           return;
         }
-
+        debugger;
         images[name] = {"name": name, "url": url, "dom":null};
-
+        debugger;
         $("#imageName").val("");
         $("#imageAddress").val("");
-
+        debugger;
         updateImageTable(images[name]);
     });
+
+    $(document).on('click', '.close', function() {
+        var deleteImage= confirm("Are you sure you want to delete this image?");
+        if (deleteImage) {
+            var name = this.id; //image name binded to button
+            delete images[name];
+            document.getElementById(name+"div").remove();
+            debugger;
+        }
+        return;
+    });
+
 
     // Load in data
     if (hash.length > 1) {

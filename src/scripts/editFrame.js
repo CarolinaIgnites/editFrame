@@ -17,9 +17,7 @@
     });
     let images = {};
     let updateImageTable = function(image) {
-      debugger;
       let url = "https://api.carolinaignites.org/cors/" + image["url"];
-      debugger;
       let imgListItem = new DOMParser().parseFromString(`
       <div id="` + image["name"] + "div" + `" class='list-group-item col-sm-6'>
         <img src=` + url + ` width=125 height=125 />
@@ -30,9 +28,7 @@
       </div>`, "text/html");
 
       image["dom"] = imgListItem.body.firstChild;
-      debugger;
       document.getElementById("imageHolder").appendChild(image["dom"]);
-      debugger;
     }
     let hashImages = function(){
       let bare_images = {};
@@ -186,20 +182,18 @@
         var url = $("#imageAddress").val();
 
         if (name == "" || url == "") return
-        debugger;
+
         if (name in images) {
-          debugger;
           let dom = images[name]["dom"];
           dom.querySelector("img").src = "https://api.carolinaignites.org/cors/" + url;
           images[name]["url"] = url;
           return;
         }
-        debugger;
         images[name] = {"name": name, "url": url, "dom":null};
-        debugger;
+
         $("#imageName").val("");
         $("#imageAddress").val("");
-        debugger;
+
         updateImageTable(images[name]);
     });
 
@@ -209,7 +203,6 @@
             var name = this.id; //image name binded to button
             delete images[name];
             document.getElementById(name+"div").remove();
-            debugger;
         }
         return;
     });

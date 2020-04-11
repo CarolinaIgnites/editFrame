@@ -21,12 +21,12 @@ var CodeMirror = window.CodeMirror;
     let updateImageTable = function(image) {
       let url = "https://api.carolinaignites.org/cors/" + image["url"];
       let imgListItem = new DOMParser().parseFromString(`
-      <div id="` + image["name"] + "div" + `" class='list-group-item col-sm-6'>
-        <img src=` + url + ` width=125 height=125 />
-        <button type="button" id="`+image["name"] + `" class="close" aria-label="Close">
+      <div id="${image["name"]}div" class='list-group-item col-sm-6'>
+        <img src=${url} width=125 height=125 />
+        <button type="button" id="${image["name"]}" class="close img-close" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h5>` + image["name"] + `</h5>
+        <h5>${image["name"]}</h5>
       </div>`, "text/html");
 
       image["dom"] = imgListItem.body.firstChild;
@@ -199,7 +199,7 @@ var CodeMirror = window.CodeMirror;
         updateImageTable(images[name]);
     });
 
-    $(document).on('click', '.close', function() {
+    $(document).on('click', '.img-close', function() {
         var deleteImage= confirm("Are you sure you want to delete this image?");
         if (deleteImage) {
             var name = this.id; //image name binded to button

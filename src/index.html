@@ -6,23 +6,8 @@
     <title>Game Frame Editor</title>
     <meta name="description" content="TODO" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="manifest" href="/manifest.json" />
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.11.4/js/jquery.terminal.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.11.4/css/jquery.terminal.min.css" rel="stylesheet" />
-    <link rel=stylesheet href="https://codemirror.net/doc/docs.css" />
-    <link rel=stylesheet href="https://codemirror.net/lib/codemirror.css" />
-    <link rel=stylesheet href="https://codemirror.net/theme/solarized.css" />
-    <script src="https://codemirror.net/lib/codemirror.js"> </script>
-    <script src="https://codemirror.net/mode/javascript/javascript.js">
-    </script>
+    <link rel="manifest" href="https://www.carolinaignites.org/assets/js/manifest.json/" />
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-    <script src="/scripts/formatting.js"> </script>
-    <script src="https://codemirror.net/mode/htmlmixed/htmlmixed.js"> </script>
-    <script src="https://codemirror.net/mode/xml/xml.js"> </script>
-    <link rel="stylesheet" type="text/css" href="/styles/main.css">
 </head>
 
 <body>
@@ -76,12 +61,12 @@
                 </div>
                 <div class="tab-pane" id="images">
                     <form>
-                        <div class="form row">
-                            <h2> Add an Image </h2>
-                            <div class="form-row">
+                        <div class="form-group">
+                            <label for="newImageForm"> Add an Image </label>
+                            <div class="form-row" id="newImageForm">
                                 <div class="form-group col-md-4">
                                     <label for="imageName">Image Name</label>
-                                    <input type="text" class="form-control" id="imageName" placeholder="...." />
+                                    <input type="text" class="form-control" id="imageName" placeholder="playerOne" />
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="imageAddress">Image Address</label>
@@ -93,7 +78,7 @@
                     <div class="d-flex justify-content-end">
                         <button id="add" type="button" class="btn btn-success addImageButton">Add</button>
                     </div>
-                    <h2> Saved Images </h2>
+                    <label for="savedImages"> Saved Images </label>
                     <div id="savedImages" class="savedImages">
                         <div id="imageHolder" class="list-group">
                         </div>
@@ -131,7 +116,7 @@
             <div class="tab-content">
                 <div class="tab-pane show active" id="game">
                     <!-- TODO: add the sandbox attribute properly -->
-                    <iframe id="frame" src="frame.html" allowfullscreen></iframe>
+                    <iframe id="frame" src="./frame.html" allowfullscreen></iframe>
                 </div>
                 <div class="tab-pane" id="console">
                     <h1>CarolinaIgnites</h1>
@@ -163,6 +148,6 @@
         </div>
     </div>
 </body>
-<script src="/scripts/editFrame.js"> </script>
+<script src="../dist/bundle.app.js"> </script>
 
 </html>

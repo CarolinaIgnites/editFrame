@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[13],{7:function(e){e.exports=JSON.parse('{"short_name":"GameFrame App","name":"Custom GameFrame App","icons":[{"src":"launcher-icon-4x.png","sizes":"192x192","type":"image/png"}],"start_url":"/index.html","display":"fullscreen","orientation":"landscape"}')}}]);

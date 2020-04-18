@@ -4,9 +4,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Game Frame Editor</title>
-    <meta name="description" content="TODO" />
+    <meta name="description" content="Static Editor page for creating 2D games
+    with gameFrame." />
     <meta name="viewport" content="width=device-width" />
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
 
 <body>
@@ -109,6 +109,7 @@
                 </li>
                 <div class="btn-group fullscreenbutton">
                     <button id="fullscreen" type="button" class="btn btn-default fullscreenbutton"> Full Screen </button>
+                    <button id="new-name" type="button" class="btn btn-default">New Url</button>
                     <button id="QR" type="button" class="qr btn btn-default" data-toggle="modal" data-target="#QRModal">QR</button>
                 </div>
             </ul>
@@ -131,22 +132,20 @@
     <div class="modal fade" id="QRModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">QR Code</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="qrcode"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">QR Code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="qrcode"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
 </body>
-<script src="../dist/bundle.app.js"> </script>
-
 </html>

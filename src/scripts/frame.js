@@ -1,7 +1,3 @@
-var code = "console.error('Nothing to run!!')";
-let image_lookup = {};
-console.log("frame.js");
-console.log(window);
 let meta = {
     debug: true,
     external_cache: function(key, value) {
@@ -102,7 +98,6 @@ let meta = {
             try {
                 eval(code);
             } catch (e) {
-                console.log("yoyoyo");
                 var err = e.constructor(e.message);
                 let trace = e.stack.split("\n")[1].split(":");
                 err.lineNumber = trace[trace.length - 2];

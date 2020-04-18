@@ -21,10 +21,11 @@ require ('codemirror/mode/javascript/javascript.js');
 require ('codemirror/mode/htmlmixed/htmlmixed.js')
 require ('codemirror/mode/xml/xml.js');
 
+require('gameframe/src/js/manifest.json');
 
 // import QRCode from 'davidshimjs-qrcodejs/qrcode.min.js';
 // window.QRCode = QRCode;
- require('davidshimjs-qrcodejs/qrcode.min.js');
+//require('davidshimjs-qrcodejs/qrcode.min.js');
 
 require('./scripts/editFrame.js');
 

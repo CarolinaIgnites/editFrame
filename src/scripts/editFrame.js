@@ -1,3 +1,5 @@
+
+var CodeMirror = window.CodeMirror;
 // Run before page load
 (() => {
     var htmlCode = $("#HTMLtext")[0];
@@ -89,7 +91,7 @@
 
     iframe.onload = () => {
         if (!iframe.contentWindow.console.addEventListener) {
-            console.log("Yor browser will not support logging.");
+            console.log("Your browser will not support logging.");
             return;
         }
         iframe.contentWindow.console.addEventListener(

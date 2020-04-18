@@ -8,7 +8,7 @@
 
 .CodeMirror-selected {
     background: blue;
-     !important;
+     
 }
 
 iframe {
@@ -20,9 +20,16 @@ iframe {
     height: 100%;
 }
 
+#frameBody {
+    overflow: hidden !important;
+}
+
 .active iframe {
     display: block;
-    width: -webkit-fill-available;
+    width: 100%;
+    width: -moz-available;      /* WebKit-based browsers will ignore this. */
+    width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+    width: fill-available;
 }
 
 .tab-content {}

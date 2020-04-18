@@ -167,7 +167,8 @@
             data.images = btoa(JSON.stringify(hashImages()));
             let hash = btoa(JSON.stringify(data));
             $.post("https://api.carolinaignites.org", {
-                data: hash
+                data: hash,
+                hash: location.hash
             }, (lookup) => {
                 location.hash = lookup['lookup'];
                 iframe.src = "frame.html?l=" + lookup['lookup'];
@@ -176,6 +177,11 @@
                 iframe.src = "frame.html?q=" + hash;
             });
         });
+
+    $("#new-name").click(() => {
+      location.hash = "";
+      $("update").trigger("click");
+    })
 
     $("#add").click(() => {
         var name = $("#imageName").val();

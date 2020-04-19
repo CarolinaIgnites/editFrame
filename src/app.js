@@ -22,7 +22,9 @@ import('gameframe/src/js/manifest.json');
 
 let QRCode = import('davidshimjs-qrcodejs/qrcode.js');
 import('./scripts/formatting.js');
-
 window.QRCodePromise = QRCode;
+
+import Split from 'split.js'
+window.Split = Split;
 
 require('./scripts/editFrame.js');

@@ -1,4 +1,7 @@
 var CodeMirror = window.CodeMirror;
+// TODO: Break these up into their logical components. E.g. import for
+// fullscreen, import for images, import for codemirror, import for frame
+// communication, import for console, import for responsiveness.
 // Run before page load
 (() => {
   var htmlCode = $("#HTMLtext")[0];
@@ -65,8 +68,23 @@ var CodeMirror = window.CodeMirror;
   let iframe = frame[0];
   let resize = function() { frame.height(frame.width() * 768 / 1366); };
   window.addEventListener('resize', resize, true);
-  window.addEventListener('load', resize, true);
-  resize();
+  window.addEventListener('load', function() {
+    // Allows for resizing the code section vs. the game section.
+    Split([ '#code-col', '#game-col' ], {
+      elementStyle : function(dimension, size, gutterSize) {
+        resize();
+        return { 'flex-basis': 'calc(' + size + '% - ' + gutterSize + 'px)' }
+      },
+      gutterStyle : function(dimension, gutterSize) {
+        return { 'flex-basis': gutterSize + 'px' }
+      },
+      sizes : [ 100 / 3., 200 / 3. ],
+      minSize : 150,
+      gutterSize : 6,
+      cursor : 'col-resize'
+    });
+    resize();
+  }, true);
 
   // Register events
   $('.list-group').css({'max-height' : frame.height() - 100 + 'px'});
@@ -125,10 +143,7 @@ var CodeMirror = window.CodeMirror;
     if (document.fullscreenEnabled || document.webkitFullscreenEnabled ||
         document.mozFullScreenEnabled || document.msFullscreenEnabled) {
 
-      // which element will be fullscreen
-      var iframe = $("#frame")[0];
       // Do fullscreen
-      // alert("yeet1")
       if (iframe.requestFullscreen) {
         iframe.requestFullscreen();
       } else if (iframe.webkitRequestFullscreen) {

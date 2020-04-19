@@ -9,9 +9,9 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 
-<body>
-    <div class="modal-body">
-        <div class="col-md-4">
+<body class="body">
+    <div class="modal-body row page">
+        <div class="col-md-4 split-col" id="code-col">
             <ul class="nav nav-tabs" id="editTabs" role="tablist">
                 <li class="active">
                     <a href="#meta" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Meta</a>
@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 split-col" id="game-col">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="active">
                     <a href="#game" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Game</a>
@@ -115,8 +115,8 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="game">
-                    <!-- TODO: add the sandbox attribute properly -->
-                    <iframe id="frame" src="./frame.html" allowfullscreen></iframe>
+                    <iframe sandbox="allow-same-origin allow-scripts" id="frame" src="./frame.html"
+                      allowfullscreen></iframe>
                 </div>
                 <div class="tab-pane" id="console">
                     <h1>CarolinaIgnites</h1>

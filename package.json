@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "Static Editor for GameFrame games.",
     "main": "index.js",
-    "sideEffects": ["*.css"],
+    "sideEffects": [
+        "*.css"
+    ],
     "watch": {
         "build": "./index.js"
     },
@@ -37,7 +39,8 @@
         "davidshimjs-qrcodejs": "^0.0.2",
         "gameframe": "^1.1.1",
         "jquery": "^3.4.1",
-        "jquery.terminal": "^2.15.2"
+        "jquery.terminal": "^2.15.2",
+        "split.js": "^1.5.11"
     },
     "devDependencies": {
         "path": "^0.12.7",

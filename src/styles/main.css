@@ -21,19 +21,21 @@ iframe {
 }
 
 #game {
-  height: 0;
-  overflow: hidden;
-  padding-top: calc(768 / 1366 * 100%);
-  background: white;
-  position: relative;
+    height: 0;
+    overflow: hidden;
+    padding-top: calc(768 / 1366 * 100%);
+    background: white;
+    position: relative;
 }
 
 .active iframe {
     display: block;
     position: absolute;
     top: 0;
-    width: -moz-available; /* WebKit-based browsers will ignore this. */
-    width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+    width: -moz-available;
+    /* WebKit-based browsers will ignore this. */
+    width: -webkit-fill-available;
+    /* Mozilla-based browsers will ignore this. */
     width: fill-available;
 }
 
@@ -55,4 +57,22 @@ iframe {
 
 #qrcode img {
     margin: 0 auto;
+}
+
+.gutter.gutter-horizontal {
+    cursor: col-resize;
+    z-index: 1;
+    background-color: #333;
+}
+
+.page {
+    display: flex;
+    flex-direction: row;
+    padding: 0 15px !important;
+    margin-top: 0;
+    height: 100%;
+}
+
+.body {
+    height: 100%;
 }

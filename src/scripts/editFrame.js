@@ -65,6 +65,7 @@ var CodeMirror = window.CodeMirror;
   let iframe = frame[0];
   let resize = function() { frame.height(frame.width() * 768 / 1366); };
   window.addEventListener('resize', resize, true);
+  window.addEventListener('load', resize, true);
   resize();
 
   // Register events
@@ -75,6 +76,7 @@ var CodeMirror = window.CodeMirror;
       document.getElementById("fullscreen").disabled = true;
     } else if (($(e.target).attr("href")) == "#game") {
       document.getElementById("fullscreen").disabled = false;
+      resize();
     }
     htmlEditor.refresh();
     jsEditor.refresh();

@@ -20,13 +20,18 @@ iframe {
     height: 100%;
 }
 
-#frameBody {
-    overflow: hidden !important;
+#game {
+  height: 0;
+  overflow: hidden;
+  padding-top: calc(768 / 1366 * 100%);
+  background: white;
+  position: relative;
 }
 
 .active iframe {
     display: block;
-    width: 100%;
+    position: absolute;
+    top: 0;
     width: -moz-available; /* WebKit-based browsers will ignore this. */
     width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
     width: fill-available;

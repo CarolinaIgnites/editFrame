@@ -1,11 +1,3 @@
-/*
-.CodeMirror-scroll {
-    height: auto;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-*/
-
 .body {
     background-color: #f8f8f8;
 }
@@ -55,9 +47,12 @@ iframe {
     resize: vertical;
 }
 
-.game-tab {
-    padding: 15px;
-    margin: -15px;
+#game-col {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top-width: 1px;
+    border-top-color: #adadad;
+    border-top-style: solid;
 }
 
 .CodeMirror-scroll,
@@ -76,9 +71,9 @@ iframe {
 .CodeMirror,
 .savedImages {
     height: calc(100% - 200px);
-    position: absolute;
+    min-height: 200px;
     margin-right: 15px;
-    margin-top: -20px
+    margin-top: -20px;
 }
 
 .savedImages {
@@ -95,8 +90,6 @@ iframe {
 
 .cleancode {
     margin: 5px;
-    top: calc(100% - 150px);
-    position: fixed;
 }
 
 #qrcode img {
@@ -135,9 +128,28 @@ iframe {
         position: fixed;
     }
 
+    .CodeMirror,
+    .savedImages {
+        position: absolute;
+        float: none;
+    }
+
+    .cleancode {
+        top: calc(100% - 150px);
+        position: fixed;
+        float: none;
+    }
+
+    #game-col {
+        border-top: none;
+    }
+
     .game-tab {
+        border-top: none;
         border-left-width: 1px;
         border-left-color: #adadad;
         border-left-style: solid;
+        padding: 15px;
+        margin: -15px;
     }
 }

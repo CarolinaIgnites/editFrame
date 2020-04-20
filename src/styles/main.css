@@ -1,19 +1,24 @@
-.CodeMirror {
+/*
+.CodeMirror-scroll {
     height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+*/
+
+.body {
+    background-color: #f8f8f8;
 }
 
-#QR,
-.fullscreenbutton {
+.action-buttons {
     float: right;
-}
-
-.CodeMirror-selected {
-    background: blue;
+    margin-top: 5px;
 }
 
 iframe {
     display: none;
 }
+
 
 .iframe-fullscreen {
     width: 100%;
@@ -28,6 +33,10 @@ iframe {
     position: relative;
 }
 
+#newImageForm {
+    padding-bottom: 15px;
+}
+
 .active iframe {
     display: block;
     position: absolute;
@@ -37,14 +46,47 @@ iframe {
     width: -webkit-fill-available;
     /* Mozilla-based browsers will ignore this. */
     width: fill-available;
+    border-color: #adadad;
+    border-style: solid;
+    border-width: 2px;
 }
 
-.tab-content {}
+#instructions {
+    resize: vertical;
+}
+
+.game-tab {
+    padding: 15px;
+    margin: -15px;
+}
+
+.CodeMirror-scroll,
+.list-group {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    max-height: 100%;
+    width: 100%;
+}
 
 .list-group {
-    margin-bottom: 10px;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
+    margin-bottom: -15px !important;
+}
+
+.CodeMirror,
+.savedImages {
+    height: calc(100% - 200px);
+    position: absolute;
+    margin-right: 15px;
+    margin-top: -20px
+}
+
+.savedImages {
+    margin-top: -15px;
+}
+
+.CodeMirror {
+    width: calc(100% - 30px);
 }
 
 .addImageButton {
@@ -53,26 +95,49 @@ iframe {
 
 .cleancode {
     margin: 5px;
+    top: calc(100% - 150px);
+    position: fixed;
 }
 
 #qrcode img {
     margin: 0 auto;
 }
 
-.gutter.gutter-horizontal {
-    cursor: col-resize;
-    z-index: 1;
-    background-color: #333;
-}
-
-.page {
-    display: flex;
-    flex-direction: row;
-    padding: 0 15px !important;
-    margin-top: 0;
-    height: 100%;
+#update {
+    border-radius: 0 0 6px 6px;
+    margin-left: 1px;
+    width: calc(100% - 1px);
 }
 
 .body {
     height: 100%;
+}
+
+.nav-tabs>li>a {
+    border-top: none;
+    border-radius: 0;
+    outline: 0;
+}
+
+@media (min-width: 992px) {
+    .page {
+        display: flex;
+        flex-direction: row;
+        padding: 0 15px !important;
+        margin: 0 !important;
+        height: 100%;
+    }
+
+    .gutter.gutter-horizontal {
+        cursor: col-resize;
+        z-index: 1;
+        height: 100%;
+        position: fixed;
+    }
+
+    .game-tab {
+        border-left-width: 1px;
+        border-left-color: #adadad;
+        border-left-style: solid;
+    }
 }

@@ -1,21 +1,13 @@
 var CodeMirror = window.CodeMirror;
+// TODO: Break these up into their logical components. E.g. import for
+// fullscreen, import for images, import for codemirror, import for frame
+// communication, import for console, import for responsiveness.
 // Run before page load
 (() => {
-  var htmlCode = $("#HTMLtext")[0];
-  var htmlEditor = CodeMirror.fromTextArea(htmlCode, {
-    mode : "htmlmixed",
-    lineNumbers : true,
-    lineWrapping : true,
-    theme : "solarized dark",
-  })
-  var jsCode = $("#codeText")[0];
-  var jsEditor = CodeMirror.fromTextArea(jsCode, {
-    mode : "javascript",
-    lineNumbers : true,
-    lineWrapping : true,
-    theme : "solarized dark",
-    viewportMargin : Infinity
-  });
+  let htmlCode = $("#HTMLtext")[0];
+  let htmlEditor;
+  let jsCode = $("#codeText")[0];
+  let jsEditor;
   let images = {};
   let updateImageTable = function(image) {
     let url = `${API_BASE}/cors/${image["url"]}`;
@@ -33,6 +25,25 @@ var CodeMirror = window.CodeMirror;
 
     image["dom"] = imgListItem.body.firstChild;
     document.getElementById("imageHolder").appendChild(image["dom"]);
+  };
+  let bind_editors = function() {
+    htmlEditor = CodeMirror.fromTextArea(htmlCode, {
+      mode : "htmlmixed",
+      lineNumbers : true,
+      lineWrapping : true,
+      theme : "solarized dark",
+    })
+    jsEditor = CodeMirror.fromTextArea(jsCode, {
+      mode : "javascript",
+      lineNumbers : true,
+      lineWrapping : true,
+      theme : "solarized dark",
+      viewportMargin : Infinity
+    });
+  };
+  let remove_splash = function() {
+    $("#splash").remove();
+    $("body").attr("style", "");
   };
   let hashImages = function() {
     let bare_images = {};
@@ -53,24 +64,60 @@ var CodeMirror = window.CodeMirror;
     let source = JSON.parse(raw);
     $("#title").val(source["meta"]["name"]);
     $("#instructions").val(source["meta"]["instructions"]);
-    htmlEditor.setValue(atob(source["html"]));
-    jsEditor.setValue(atob(source["code"]));
     $("#boundaries")[0].checked = source["meta"]["boundaries"];
     $("#gravity")[0].checked = source["meta"]["gravity"];
     $("#impulse")[0].checked = source["meta"]["impulse"];
     constructImages(JSON.parse(atob(source["images"] || btoa("{}"))));
-    $("#update").click();
+    let setup_editors = function() {
+      bind_editors();
+      htmlEditor.setValue(atob(source["html"]));
+      jsEditor.setValue(atob(source["code"]));
+      $("#update").click();
+      remove_splash();
+    };
+    $(document).ready(setup_editors);
   };
   let frame = $("#frame");
   let iframe = frame[0];
+
+  // Capture transition point.
   let resize = function() { frame.height(frame.width() * 768 / 1366); };
+
   window.addEventListener('resize', resize, true);
-  window.addEventListener('load', resize, true);
-  resize();
+  $(document).ready(function() {
+    // Allows for resizing the code section vs. the game section.
+    let get_left = function(index, gutterSize) {
+      const W = $(window).width();
+      if (W < 902)
+        return "calc(" + (100 / 3) + "% - 19px)";
+      return "calc(" +
+             100 * $(".split-col")[index].getBoundingClientRect().width / W +
+             "% + 1px)";
+    };
+    var s = Split([ '#code-col', '#game-col' ], {
+      elementStyle : function(dimension, size, gutterSize, index) {
+        if (index == 0) {
+          resize();
+        }
+        return { 'flex-basis': 'calc(' + size + '% - ' + gutterSize + 'px)' }
+      },
+      onDragEnd : function() {
+        let left = get_left(0, 30);
+        $($('.gutter')[0]).css("left", left)
+      },
+      gutterStyle : function(dimension, gutterSize) {
+        let left = get_left(0, gutterSize);
+        return { 'width': gutterSize + 'px', 'left': left, }
+      },
+      sizes : [ 100 / 3., 200 / 3. ],
+      minSize : [ 375, 600 ],
+      gutterSize : 30,
+      cursor : 'col-resize'
+    });
+    resize();
+  }, true);
 
   // Register events
-  $('.list-group').css({'max-height' : frame.height() - 100 + 'px'});
-
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
     if (($(e.target).attr("href")) == "#console") {
       document.getElementById("fullscreen").disabled = true;
@@ -81,7 +128,6 @@ var CodeMirror = window.CodeMirror;
     htmlEditor.refresh();
     jsEditor.refresh();
   });
-  $('.CodeMirror-scroll').css({'max-height' : frame.height() + 80 + 'px'});
 
   let motivation = [
     "Errors can be scary but they don't have to be :)",
@@ -104,31 +150,22 @@ var CodeMirror = window.CodeMirror;
     }, false);
   };
 
-  $("#cleancodeHTML").click(function() {
-    CodeMirror.commands["selectAll"](htmlEditor);
-    var range = {
-      from : htmlEditor.getCursor(true),
-      to : htmlEditor.getCursor(false)
-    };
-    htmlEditor.autoFormatRange(range.from, range.to);
-  })
-  $("#cleancodeJS").click(function() {
-    CodeMirror.commands["selectAll"](jsEditor);
-    var range = {
-      from : jsEditor.getCursor(true),
-      to : jsEditor.getCursor(false)
-    };
-    jsEditor.autoFormatRange(range.from, range.to);
-  })
+  let format = function(editor, formatter) {
+    CodeMirror.commands["selectAll"](editor);
+    let from = editor.getCursor(true);
+    let to = editor.getCursor(false);
+    let text = editor.getRange(from, to);
+    editor.setValue(formatter(text));
+  }
+
+  $("#cleancodeHTML").click(()=>format(htmlEditor, html_beautify));
+  $("#cleancodeJS").click(()=>format(jsEditor, js_beautify));
 
   $("#fullscreen").click(function() {
     if (document.fullscreenEnabled || document.webkitFullscreenEnabled ||
         document.mozFullScreenEnabled || document.msFullscreenEnabled) {
 
-      // which element will be fullscreen
-      var iframe = $("#frame")[0];
       // Do fullscreen
-      // alert("yeet1")
       if (iframe.requestFullscreen) {
         iframe.requestFullscreen();
       } else if (iframe.webkitRequestFullscreen) {
@@ -222,6 +259,11 @@ var CodeMirror = window.CodeMirror;
            parse(hash[1])
        }
      }).fail(() => parse(hash[1]))
+  } else {
+    $(document).ready(() => {
+      bind_editors();
+      remove_splash();
+    });
   }
 })();
 

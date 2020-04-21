@@ -4,6 +4,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default;
 
 module.exports = {
   entry : {'app' : './src/app.js', 'app-frame' : './src/app-frame.js'},
@@ -31,11 +32,13 @@ module.exports = {
       filename : 'index.html',
       chunks : [ 'app' ],
     }),
+    new HTMLInlineCSSWebpackPlugin(),
     new HtmlWebpackPlugin({
       template : 'src/html/frame.html',
       filename : 'frame.html',
       chunks : [ 'app-frame' ],
     }),
+    new HTMLInlineCSSWebpackPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
@@ -45,7 +48,7 @@ module.exports = {
     new webpack.DefinePlugin({
       API_BASE : JSON.stringify(process.env.API_BASE ||
                                 "https://api.carolinaignites.org")
-    })
+    }),
   ],
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],

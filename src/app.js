@@ -31,3 +31,4 @@ import Split from 'split.js'
 window.Split = Split;
 
 require('./scripts/editFrame.js');
+require('./scripts/image.js');

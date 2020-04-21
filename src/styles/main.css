@@ -153,3 +153,19 @@ iframe {
         margin: -15px;
     }
 }
+
+#editor {
+  padding: 2vmax;
+  box-shadow: 0 13px 8px 3px rgba(40,40,40,0.3);
+}
+
+#editor canvas {
+  margin-bottom: 1vmax;
+}
+
+#editor button {
+  background: white;
+  color: #222;
+  border: 0;
+  padding: .3em 1em;
+}

@@ -1,35 +1,28 @@
-require ('codemirror/lib/codemirror.css');
-require ('codemirror/theme/solarized.css');
-require('jquery.terminal/css/jquery.terminal.css');
-require('bootstrap/dist/css/bootstrap.min.css');
+import('codemirror/lib/codemirror.css');
+import('codemirror/theme/solarized.css');
+import('jquery.terminal/css/jquery.terminal.css');
+import('bootstrap/dist/css/bootstrap.min.css');
 require('./styles/main.css');
-
-
 
 import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
 import 'jquery.terminal';
 
-require('bootstrap');
-
+import('bootstrap/js/modal.js');
+import('bootstrap/js/tab.js');
 
 import CodeMirror from 'codemirror/lib/codemirror.js';
+import('codemirror/mode/javascript/javascript.js');
+import('codemirror/mode/htmlmixed/htmlmixed.js')
+import('codemirror/mode/xml/xml.js');
 window.CodeMirror = CodeMirror;
 
-require ('codemirror/mode/javascript/javascript.js');
-require ('codemirror/mode/htmlmixed/htmlmixed.js')
-require ('codemirror/mode/xml/xml.js');
+import('gameframe/src/js/manifest.json');
 
-require('gameframe/src/js/manifest.json');
+let QRCode = import('davidshimjs-qrcodejs/qrcode.js');
+import('./scripts/formatting.js');
 
-// import QRCode from 'davidshimjs-qrcodejs/qrcode.min.js';
-// window.QRCode = QRCode;
-//require('davidshimjs-qrcodejs/qrcode.min.js');
+window.QRCodePromise = QRCode;
 
 require('./scripts/editFrame.js');
-
-require('./scripts/formatting.js');
-
-
-

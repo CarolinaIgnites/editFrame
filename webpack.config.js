@@ -32,13 +32,11 @@ module.exports = {
       filename : 'index.html',
       chunks : [ 'app' ],
     }),
-    new HTMLInlineCSSWebpackPlugin(),
     new HtmlWebpackPlugin({
       template : 'src/html/frame.html',
       filename : 'frame.html',
       chunks : [ 'app-frame' ],
     }),
-    new HTMLInlineCSSWebpackPlugin(),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional

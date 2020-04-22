@@ -1,8 +1,6 @@
 import('codemirror/lib/codemirror.css');
 import('codemirror/theme/solarized.css');
 import('jquery.terminal/css/jquery.terminal.css');
-import('bootstrap/dist/css/bootstrap.css');
-import('./styles/main.css');
 
 import $ from 'jquery';
 window.jQuery = $;
@@ -30,4 +28,6 @@ window.html_beautify = html_beautify;
 import Split from 'split.js'
 window.Split = Split;
 
+require('bootstrap/dist/css/bootstrap.css');
+require('./styles/main.css');
 require('./scripts/editFrame.js');

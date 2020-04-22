@@ -66,7 +66,7 @@ function elt(type, props, ...children) {
   return dom;
 }
 
-const scale = 10;
+const scale = 16;
 
 class PictureCanvas {
   constructor(picture, pointerDown) {
@@ -136,14 +136,95 @@ function drawPicture(newPic, canvas, scale, oldPic) {
   }
   let cx = canvas.getContext('2d');
   
+// Reset the current path
+  cx.beginPath(); 
+  // Staring point (10,45)
+   cx.moveTo(canvas.width/2, 0);
+  // End point (180,47)
+  cx.lineTo(canvas.width/2, canvas.height);
+  // Make the line visible
+  cx.strokeStyle = "red";
+  cx.stroke();
+
   for (let y=0; y<newPic.height; y++) {
     for (let x=0; x<newPic.width; x++) {
       if (!oldPic || oldPic.pixel(x, y) !== newPic.pixel(x, y)) {
+        
+
         cx.fillStyle = newPic.pixel(x, y);
-        cx.fillRect(x * scale, y * scale, scale, scale);        
+        cx.fillRect(x * scale, y * scale, scale, scale);
+        cx.strokeStyle = "#ddd";
+        cx.strokeRect(x * scale, y * scale, scale, scale);        
       }
     }
   }
+
+  /* Draw axis lines */
+
+  // Reset the current path
+  cx.beginPath(); 
+  cx.lineWidth = 2.5;
+  // Staring point (10,45)
+   cx.moveTo(canvas.width/2, 0);
+  // End point (180,47)
+  cx.lineTo(canvas.width/2, canvas.height);
+  // Make the line visible
+  cx.strokeStyle = "#8b0000";
+  cx.stroke();
+
+
+   // Reset the current path
+  cx.beginPath(); 
+  // Staring point (10,45)
+   cx.moveTo(0,canvas.width/2);
+  // End point (180,47)
+  cx.lineTo(canvas.width, canvas.height/2);
+  // Make the line visible
+  cx.strokeStyle = "#8b0000";
+  cx.stroke();
+
+  // Reset the current path
+  cx.beginPath(); 
+  cx.lineWidth = 1;
+  // Staring point (10,45)
+   cx.moveTo(canvas.width/4 * 1, 0);
+  // End point (180,47)
+  cx.lineTo(canvas.width/4 * 1, canvas.height);
+  // Make the line visible
+  cx.strokeStyle = "#777777";
+  cx.stroke();
+
+   // Reset the current path
+  cx.beginPath(); 
+  // Staring point (10,45)
+   cx.moveTo(canvas.width/4 * 3, 0);
+  // End point (180,47)
+  cx.lineTo(canvas.width/4 * 3, canvas.height);
+  // Make the line visible
+  cx.strokeStyle = "#777777";
+  cx.stroke();
+
+
+  // Reset the current path
+  cx.beginPath(); 
+  // Staring point (10,45)
+   cx.moveTo(0, canvas.width/4 * 1);
+  // End point (180,47)
+  cx.lineTo(canvas.width, canvas.width/4 * 1);
+  // Make the line visible
+  cx.strokeStyle = "#777777";
+  cx.stroke();
+
+  // Reset the current path
+  cx.beginPath(); 
+  // Staring point (10,45)
+   cx.moveTo(0, canvas.width/4 * 3);
+  // End point (180,47)
+  cx.lineTo(canvas.width, canvas.width/4 * 3);
+  // Make the line visible
+  cx.strokeStyle = "#777777";
+  cx.stroke();
+
 }
 
 function pointerPosition(pos, domNode) {
@@ -433,8 +514,8 @@ function pick(pos, state, dispatch) {
 
 // Initiate App
 let startState = { tool: "draw",
-             color: "#000000",
-             picture: Picture.empty(50, 50, "gray"),
+             color: "black",
+             picture: Picture.empty(32, 32, "white"),
              done: [],
              doneAt: 0
             };

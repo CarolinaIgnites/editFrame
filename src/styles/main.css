@@ -157,10 +157,13 @@ iframe {
 #editor {
   padding: 2vmax;
   box-shadow: 0 13px 8px 3px rgba(40,40,40,0.3);
+  background: white;
+  color: black;
 }
 
 #editor canvas {
   margin-bottom: 1vmax;
+  box-shadow: 0 13px 8px 3px rgba(40,40,40,0.3);
 }
 
 #editor button {

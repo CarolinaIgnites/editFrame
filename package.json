@@ -34,7 +34,7 @@
     },
     "homepage": "https://www.carolinaignites.org",
     "dependencies": {
-        "@madisetti/web-sandbox": "0.0.1",
+        "@madisetti/web-sandbox": "0.0.2",
         "bootstrap": "^3.4.1",
         "codemirror": "^5.52.2",
         "davidshimjs-qrcodejs": "^0.0.2",

@@ -25,6 +25,17 @@ iframe {
     position: relative;
 }
 
+#sandbox {
+    border-radius: 0 0 10px 10px;
+    max-width: 100%;
+    margin: 0 0 60px 0;
+}
+
+pre.output {
+  background-color: #333;
+  min-height:40px;
+}
+
 #newImageForm {
     padding-bottom: 15px;
 }
@@ -72,14 +83,11 @@ iframe {
     min-height: 200px;
     margin-right: 15px;
     margin-top: -20px;
+    width: calc(100% - 30px);
 }
 
 .savedImages {
     margin-top: -15px;
-}
-
-.CodeMirror {
-    width: calc(100% - 30px);
 }
 
 .addImageButton {
@@ -95,7 +103,7 @@ iframe {
 }
 
 #update {
-    border-radius: 0 0 6px 6px;
+    border-radius: 0;
     margin-left: 1px;
     width: calc(100% - 1px);
 }

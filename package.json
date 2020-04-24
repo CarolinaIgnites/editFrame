@@ -1,6 +1,6 @@
 {
     "name": "editframe",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Static Editor for GameFrame games.",
     "main": "index.js",
     "sideEffects": [
@@ -34,6 +34,7 @@
     },
     "homepage": "https://www.carolinaignites.org",
     "dependencies": {
+        "@madisetti/web-sandbox": "0.0.1",
         "bootstrap": "^3.4.1",
         "codemirror": "^5.52.2",
         "davidshimjs-qrcodejs": "^0.0.2",

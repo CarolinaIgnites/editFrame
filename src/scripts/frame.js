@@ -24,9 +24,6 @@ let meta = {
 };
 (() => {
   require("@madisetti/web-sandbox/src/console.js");
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
   let query = window.location.search.split('?q=');
   let lookup = window.location.search.split('?l=');
   var data = {meta : meta}; // Init defaults
@@ -54,8 +51,9 @@ let meta = {
      }).fail(() => parse(query[1]))
   } else if (query.length > 1) {
     parse(query[1]);
-  } // Start if off!
+  }
 
+  // Start if off!
   new GameFrame(meta, async function(gf) {
     let collision = gf.collision;
     let gameOver = gf.gameOver;
@@ -64,16 +62,16 @@ let meta = {
     let registerKeys = gf.registerKeys;
     let registerLoops = gf.registerLoops;
     let template = gf.template;
-    let pause = function(){
+    let pause = function() {
       gf.pause();
       console.log("pausing game");
       return
-    }
-    let unpause = function(){
+    };
+    let unpause = function() {
       gf.unpause();
       console.log("resuming game");
       return
-    }
+    };
     console.evaluate = function(command) {
       let item = {command : command};
       try {

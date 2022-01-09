@@ -20,7 +20,7 @@
           # what it's convenient and removes a moving piece.
           outputHashMode = "recursive";
           outputHashAlgo = "sha256";
-          outputHash = "sha256-AYk9Gjgdb2mLY1iLAHBEDw06JyyFWSPyQgMa/59+1PE=";
+          outputHash = "sha256-IAntgpafh/TVoJziHzvGGCXTrwq7y+WW/1MxsPmZb6E=";
           # Use source
           src = self;
           # We need unzip to build this package
@@ -35,11 +35,13 @@
             cp *.nix $out/
         '';
         };
+      shell = #node2nix
+        (pkgs.callPackage nixified { }).shell;
 
-      nodeDependencies = #node2nix
-        (pkgs.callPackage nixified { }).shell.nodeDependencies;
+      nodeDependencies = shell.nodeDependencies;
     in
     {
+      devShell = shell;
       defaultPackage.x86_64-linux =
         pkgs.stdenv.mkDerivation {
           name = "ignite-editor";

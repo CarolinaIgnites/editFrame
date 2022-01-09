@@ -3,20 +3,21 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
-
-    node2nix = {
-      url = "github:svanderburg/node2nix";
-      flake = false;
-    };
   };
 
-  outputs = { self, nixpkgs, node2nix }:
+  outputs = { self, nixpkgs }:
     let
-
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+      };
       nixified =
-        with import nixpkgs { system = "x86_64-linux"; };
-        stdenv.mkDerivation {
+        pkgs.stdenv.mkDerivation {
           name = "ignite-editor-nix";
+
+          # Manually declare output so that we have internet access to pull node
+          # modules. Nix people hate this btw, since it isn't pure- but guess
+          # what it's convenient and removes a moving piece.
           outputHashMode = "recursive";
           outputHashAlgo = "sha256";
           outputHash = "sha256-AYk9Gjgdb2mLY1iLAHBEDw06JyyFWSPyQgMa/59+1PE=";
@@ -30,27 +31,22 @@
           # Installing simply means copying all files to the output directory
           installPhase = ''# Build source files and copy them over.
             mkdir -p $out/
-            cp src/*.json $out/
-            cp src/*.png $out/
             cp *.json $out/
             cp *.nix $out/
         '';
         };
 
       nodeDependencies = #node2nix
-        with import nixpkgs { system = "x86_64-linux"; };
         (pkgs.callPackage nixified { }).shell.nodeDependencies;
     in
     {
       defaultPackage.x86_64-linux =
-        # Notice the reference to nixpkgs here.
-        with import nixpkgs { system = "x86_64-linux"; };
-        stdenv.mkDerivation {
+        pkgs.stdenv.mkDerivation {
           name = "ignite-editor";
           # Use source
           src = self;
           # We need unzip to build this package
-          buildInputs = [ pkgs.nodejs pkgs.nodePackages.node2nix ];
+          buildInputs = [ pkgs.nodejs ];
           buildPhase = ''
             ln -s ${nodeDependencies}/lib/node_modules ./node_modules
             export PATH="${nodeDependencies}/bin:$PATH"
@@ -59,6 +55,8 @@
           # Installing simply means copying all files to the output directory
           installPhase = ''# Build source files and copy them over.
           mkdir -p $out;
+          cp src/*.json $out/
+          cp src/*.png $out/
           cp -R dist $out/static;
           ln -s $out/static/index.html $out/;
           ln -s $out/static/frame.html $out/;

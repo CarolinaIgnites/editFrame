@@ -20,13 +20,13 @@
           # what it's convenient and removes a moving piece.
           outputHashMode = "recursive";
           outputHashAlgo = "sha256";
-          outputHash = "sha256-IAntgpafh/TVoJziHzvGGCXTrwq7y+WW/1MxsPmZb6E=";
+          outputHash = "sha256-sNa5VLMJ8RDHevMtTmP5ttedcf0NerBJeYlKkCLyI6k=";
           # Use source
           src = self;
           # We need unzip to build this package
           buildInputs = [ pkgs.nodePackages.node2nix ];
           buildPhase = ''
-            node2nix --development
+            node2nix --development -l package-lock.json
           '';
           # Installing simply means copying all files to the output directory
           installPhase = ''# Build source files and copy them over.
@@ -41,7 +41,6 @@
       nodeDependencies = shell.nodeDependencies;
     in
     {
-      devShell = shell;
       defaultPackage.x86_64-linux =
         pkgs.stdenv.mkDerivation {
           name = "ignite-editor";

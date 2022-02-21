@@ -20,7 +20,7 @@
           # what it's convenient and removes a moving piece.
           outputHashMode = "recursive";
           outputHashAlgo = "sha256";
-          outputHash = "sha256-09URnNzN1fRRxcQlO94xgiE4NJKmG0MItxU0TflAMsM=";
+          outputHash = "sha256-+PQPlaqG3kRrFWSDpJyXSI3/eXUIxi3rPpX8zpCxQkw=";
           # Use source
           src = self;
           # We need unzip to build this package
@@ -45,7 +45,7 @@
       nodeDependencies = shell.nodeDependencies;
     in
     {
-      defaultPackage.x86_64-linux =
+      defaultPackage."${system}" =
         pkgs.stdenv.mkDerivation {
           name = "ignite-editor";
           # Use source

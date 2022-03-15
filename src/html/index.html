@@ -4,21 +4,21 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Game Frame Editor</title>
-    <meta name="description" content="Static Editor page for creating 2D games
-    with gameFrame." />
+    <meta name="description" content="Static Editor page for creating 2D games with gameFrame." />
     <meta name="viewport" content="width=device-width" />
     <!-- The sandbox template: -->
     <script type="text/template" id="tplSandbox">
         <pre class="output"></pre>
-		<div class="input">
-			<textarea rows="1" placeholder="<%= placeholder %>"></textarea>
-		</div>
-	</script>
+    <div class="input">
+      <textarea rows="1" placeholder="<%= placeholder %>"></textarea>
+    </div>
+  </script>
 
     <!-- The command/result template (NB whitespace/line breaks matter inside <pre> tag): -->
-    <script type="text/template" id="tplCommand"><% if (! _hidden) { %><span class="command"><%= command %></span>		
+    <script type="text/template" id="tplCommand"><% if (! _hidden) { %><span class="command"><%= command %></span>
 <span class="prefix"><%= this.resultPrefix %></span><span class="<%= _class %>"><%= result %></span>
 <% } %></script>
+    <link rel="manifest" href="/manifest.json" />
 </head>
 
 <body class="body" style="margin:0;padding:0;overflow:hidden">

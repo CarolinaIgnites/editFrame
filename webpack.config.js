@@ -4,6 +4,9 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default;
+
+const encode = require("@madisetti/web-sandbox/src/encode.js");
 
 module.exports = {
   entry : {'app' : './src/app.js', 'app-frame' : './src/app-frame.js'},
@@ -43,9 +46,10 @@ module.exports = {
       chunkFilename: '[id].css',
     }),
     new webpack.DefinePlugin({
+      CONSOLE_SCRIPT : `"${encode.ENCODED}"`,
       API_BASE : JSON.stringify(process.env.API_BASE ||
                                 "https://api.carolinaignites.org")
-    })
+    }),
   ],
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],

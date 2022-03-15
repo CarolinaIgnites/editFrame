@@ -8,6 +8,7 @@ var CodeMirror = window.CodeMirror;
   let htmlEditor;
   let jsCode = $("#codeText")[0];
   let jsEditor;
+  let terminal = null;
   let images = {};
   let updateImageTable = function(image) {
     let url = `${API_BASE}/cors/${image["url"]}`;
@@ -81,7 +82,12 @@ var CodeMirror = window.CodeMirror;
   let iframe = frame[0];
 
   // Capture transition point.
-  let resize = function() { frame.height(frame.width() * 768 / 1366); };
+  let resize = function() {
+    frame.height(frame.width() * 768 / 1366);
+    if (terminal) {
+      $(terminal).css('height', `calc(100vh - ${frame.height() + 225}px)`);
+    }
+  };
 
   window.addEventListener('resize', resize, true);
   $(document).ready(function() {
@@ -141,13 +147,21 @@ var CodeMirror = window.CodeMirror;
       console.log("Your browser will not support logging.");
       return;
     }
-    iframe.contentWindow.console.addEventListener(
-        "log", function(value) { console.log(value); });
-    iframe.contentWindow.addEventListener("error", function(error) {
-      let msg = motivation[Math.random() * motivation.length | 0];
-      console.error(error.message + "\n    on line: " + error.error.lineNumber +
-                    "\n" + msg);
-    }, false);
+
+    if (!window._sandbox) {
+      // Create the sandbox:
+      window._sandbox = new Sandbox.View({
+        el : $('#sandbox'),
+        iframe:iframe,
+        model : new Sandbox.Model({
+        iframe:iframe,
+        })
+      });
+      terminal = $("pre.output")[0];
+      resize();
+    } else {
+      window._sandbox.model.iframeSetup(iframe);
+    }
   };
 
   let format = function(editor, formatter) {
@@ -266,28 +280,3 @@ var CodeMirror = window.CodeMirror;
     });
   }
 })();
-
-// Run jQuery Plugin
-jQuery(function($, undefined) {
-  var term = $('#console').terminal(function(command) {
-    if (command !== '') {
-      try {
-        var result = window.eval(command);
-        if (result !== undefined) {
-          this.echo(new String(result));
-        }
-      } catch (e) {
-        this.error(new String(e));
-      }
-    } else {
-      this.echo('');
-    }
-  }, {
-    greetings : 'Welcome to the terminal!',
-    name : 'js_demo',
-    height : 200,
-    prompt : '> '
-  });
-  console.log = (v) => { term.echo("Log: " + v); };
-  console.error = (v) => { term.error(v); };
-});

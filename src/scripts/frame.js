@@ -23,42 +23,7 @@ let meta = {
   },
 };
 (() => {
-  // Stolen from Stackoverflow: https: //stackoverflow.com/questions/14924362/
-  let C = {
-    __on : {},
-    addEventListener : function(name, callback) {
-      this.__on[name] = (this.__on[name] || []).concat(callback);
-      return this;
-    },
-    dispatchEvent : function(name, value) {
-      this.__on[name] = (this.__on[name] || []);
-      for (var i = 0, n = this.__on[name].length; i < n; i++) {
-        this.__on[name][i].call(this, value);
-      }
-      return this;
-    },
-    log : function() {
-      let a = []; // For V8 optimization
-      for (let i = 0, n = arguments.length; i < n; i++) {
-        // What a hack
-        let trace = (new Error).stack.split("\n")[2].split(":");
-        let line = (trace[trace.length - 2] | 0);
-        a.push(arguments[i].toString() + " (line " + line + ")");
-      }
-      this.dispatchEvent("log", a.join("\n"));
-    },
-    error : function() {
-      let a = []; // For V8 optimization
-      for (let i = 0, n = arguments.length; i < n - 2; i++) {
-        let message = arguments[i].message;
-        message += arguments[i].stack.replace(/\([^:]*:[^:]*:/g, "(line ");
-        a.push(message);
-      }
-      this.dispatchEvent("error", a);
-    }
-  };
-  C.debug = C.info = C.log;
-  window.console = C; // Handle gracefuly if things break.
+  require("@madisetti/web-sandbox/src/console.js");
   let query = window.location.search.split('?q=');
   let lookup = window.location.search.split('?l=');
   var data = {meta : meta}; // Init defaults
@@ -69,8 +34,6 @@ let meta = {
     data = JSON.parse(raw)
     meta = Object.assign({}, data["meta"], meta);
     code = window.atob(data["code"]) || code;
-    console.log(code);
-    console.log("Hello ? Dude.");
     image_lookup = JSON.parse(window.atob(data["images"]));
     container.innerHTML = window.atob(data["html"]);
   };
@@ -88,9 +51,10 @@ let meta = {
      }).fail(() => parse(query[1]))
   } else if (query.length > 1) {
     parse(query[1]);
-  } // Start if off!
+  }
 
-  new GameFrame(meta, function(gf) {
+  // Start if off!
+  new GameFrame(meta, async function(gf) {
     let collision = gf.collision;
     let gameOver = gf.gameOver;
     let score = gf.score;
@@ -98,6 +62,26 @@ let meta = {
     let registerKeys = gf.registerKeys;
     let registerLoops = gf.registerLoops;
     let template = gf.template;
+    let pause = function() {
+      gf.pause();
+      console.log("pausing game");
+      return
+    };
+    let unpause = function() {
+      gf.unpause();
+      console.log("resuming game");
+      return
+    };
+    console.evaluate = function(command) {
+      let item = {command : command};
+      try {
+        item.result = eval(command);
+      } catch (error) {
+        item.result = error.toString();
+        item._class = "error";
+      }
+      console.dispatchEvent("evaluate", item);
+    };
     try {
       eval(code);
     } catch (e) {

@@ -20,7 +20,7 @@
           # what it's convenient and removes a moving piece.
           outputHashMode = "recursive";
           outputHashAlgo = "sha256";
-          outputHash = "sha256-+kb01O7zUkccivwtxAGyKJgB0/qK/BYzKxkxWA2Fzkg=";
+          outputHash = "sha256-h/J04XWbulvgEJD9LlFmd9DVro7af8VL8m7+qg2JfrA=";
           # Use source
           src = self;
           # We need unzip to build this package

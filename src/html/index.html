@@ -6,15 +6,30 @@
     <title>Game Frame Editor</title>
     <meta name="description" content="Static Editor page for creating 2D games with gameFrame." />
     <meta name="viewport" content="width=device-width" />
+<<<<<<< HEAD
+=======
+    <!-- The sandbox template: -->
+    <script type="text/template" id="tplSandbox">
+        <pre class="output"></pre>
+    <div class="input">
+      <textarea rows="1" placeholder="<%= placeholder %>"></textarea>
+    </div>
+  </script>
+
+    <!-- The command/result template (NB whitespace/line breaks matter inside <pre> tag): -->
+    <script type="text/template" id="tplCommand"><% if (! _hidden) { %><span class="command"><%= command %></span>
+<span class="prefix"><%= this.resultPrefix %></span><span class="<%= _class %>"><%= result %></span>
+<% } %></script>
+>>>>>>> ff
     <link rel="manifest" href="/manifest.json" />
 </head>
 
 <body class="body" style="margin:0;padding:0;overflow:hidden">
     <div style="width:100%; height:100%;
       background-color:#333;color:#fff;text-align:center;line-height:100vh;z-index:1;position:fixed;margin:0;padding:0;top:0" id="splash">
-      <p style="vertical-align:middle;display:inline-block;">
-        Loading...
-      </p>
+        <p style="vertical-align:middle;display:inline-block;">
+            Loading...
+        </p>
     </div>
     <div class="modal-body row page">
         <div class="col-md-4 split-col" id="code-col">
@@ -67,7 +82,6 @@
         <div class="col-md-8 split-col" id="game-col">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="active"><a href="#game" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Game</a></li>
-                <li><a href="#console" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">Console</a></li>
                 <div class="btn-group action-buttons">
                     <button id="fullscreen" type="button" class="btn btn-default fullscreenbutton">Full Screen</button>
                     <button id="new-name" type="button" class="btn btn-default">New Url</button>
@@ -76,12 +90,14 @@
             </ul>
             <div class="tab-content game-tab">
                 <div class="tab-pane active" id="game">
-                  <iframe sandbox="allow-same-origin allow-scripts" id="frame" src="./frame.html" allowfullscreen></iframe>
+                    <iframe sandbox="allow-same-origin allow-scripts" id="frame" src="./frame.html" allowfullscreen></iframe>
                 </div>
                 <div class="tab-pane" id="console">
-                    <h1>CarolinaIgnites</h1>
+                    <h1>todo</h1>
                 </div>
-            </div><button id="update" type="button" class="btn btn-default btn-lg btn-block">Update Game</button>
+            </div>
+            <button id="update" type="button" class="btn btn-default btn-lg btn-block">Update Game</button>
+            <div id="sandbox">sandbox console loading...</div>
         </div>
     </div>
     <div class="modal fade" id="QRModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -18,9 +18,7 @@
           # Manually declare output so that we have internet access to pull node
           # modules. Nix people hate this btw, since it isn't pure- but guess
           # what it's convenient and removes a moving piece.
-          outputHashMode = "recursive";
-          outputHashAlgo = "sha256";
-          outputHash = "sha256-h/J04XWbulvgEJD9LlFmd9DVro7af8VL8m7+qg2JfrA=";
+
           # Use source
           src = self;
           # We need unzip to build this package

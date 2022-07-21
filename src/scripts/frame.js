@@ -83,8 +83,14 @@ let meta = {
       console.dispatchEvent("evaluate", item);
     };
     try {
+      console.log("yoyoy");
+      code = infiniteLoopDetector.wrap(code)
       eval(code);
     } catch (e) {
+      if (e.type === 'InfiniteLoopError') {
+        console.log('infinite loop detected')
+      }
+
       var err = e.constructor(e.message);
       let trace = e.stack.split("\n")[1].split(":");
       err.lineNumber = trace[trace.length - 2];

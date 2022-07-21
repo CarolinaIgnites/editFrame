@@ -10,3 +10,5 @@ window.jQuery = $;
 window.$ = $;
 
 import('./scripts/frame.js');
+import infiniteLoopDetector from './scripts/makeitsafe.js';
+window.infiniteLoopDetector = infiniteLoopDetector;

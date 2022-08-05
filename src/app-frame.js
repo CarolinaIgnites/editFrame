@@ -9,4 +9,7 @@ import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
 
+let infiniteLoopDetector = import('./scripts/makeitsafe.js');
+window.infiniteLoopDetector = infiniteLoopDetector; 
+
 import('./scripts/frame.js');

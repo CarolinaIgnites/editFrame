@@ -1,3 +1,8 @@
+import infiniteLoopDetector from './makeitsafe.js';
+console.log(infiniteLoopDetector);
+let infDetector = infiniteLoopDetector.infiniteLoopDetector;
+console.log(infDetector);
+
 // Defaults in case a game doesn't load.
 var code = "console.error('Nothing to run!!')";
 let image_lookup = {};
@@ -82,9 +87,15 @@ let meta = {
       }
       console.dispatchEvent("evaluate", item);
     };
+
+    code = infDetector.wrap(code)
     try {
       eval(code);
     } catch (e) {
+      if (e.type === 'InfiniteLoopError') {
+        console.err('infinite loop detected')
+      }
+
       var err = e.constructor(e.message);
       let trace = e.stack.split("\n")[1].split(":");
       err.lineNumber = trace[trace.length - 2];

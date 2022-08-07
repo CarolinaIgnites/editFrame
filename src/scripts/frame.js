@@ -1,4 +1,7 @@
-let infiniteLoopDetector = import('./makeitsafe.js');
+import infiniteLoopDetector from './makeitsafe.js';
+console.log(infiniteLoopDetector);
+let infDetector = infiniteLoopDetector.infiniteLoopDetector;
+console.log(infDetector);
 
 // Defaults in case a game doesn't load.
 var code = "console.error('Nothing to run!!')";
@@ -85,13 +88,12 @@ let meta = {
       console.dispatchEvent("evaluate", item);
     };
 
-    console.log("Testing for infinite loop");
-    code = infiniteLoopDetector.wrap(code)
+    code = infDetector.wrap(code)
     try {
       eval(code);
     } catch (e) {
       if (e.type === 'InfiniteLoopError') {
-        console.log('infinite loop detected')
+        console.err('infinite loop detected')
       }
 
       var err = e.constructor(e.message);

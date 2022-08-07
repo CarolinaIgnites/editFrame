@@ -1,3 +1,7 @@
+// TODO: Clean up. Not really wriotten for modules and a bit of a hack as is.
+// Imports should be better, also may as well make this a proper javascript
+// class opposed to whatever this is.
+
 var infiniteLoopDetector = (function() {
   var map = {}
 
@@ -22,11 +26,16 @@ var infiniteLoopDetector = (function() {
     if (typeof codeStr !== 'string') {
       throw new Error('Can only wrap code represented by string, not any other thing at the time! If you want to wrap a function, convert it to string first.')
     }
+    // Replaces potential infite loop areas with a bit of guard code that makes
+    // and makes sure that the loop doesn't exceed some value of execution time.
+    //
     // this is not a strong regex, but enough to use at the time
-    return codeStr.replace(/for *\(.*\{|while *\(.*\{|do *\{/g, function(loopHead) {
+    let response = codeStr.replace(/for *\(.*\{|while *\(.*\{|do *\{/g, function(loopHead) {
       var id = parseInt(Math.random() * Number.MAX_SAFE_INTEGER)
-      return `infiniteLoopDetector(${id});${loopHead}infiniteLoopDetector(${id});`
-    })
+      return `infDetector(${id});${loopHead}infDetector(${id});`
+    });
+    // console.log(response);
+    return response;
   }
   infiniteLoopDetector.unwrap = function(codeStr) {
     return codeStr.replace(/infiniteLoopDetector\([0-9]*?\);/g, '')
